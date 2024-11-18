@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:09:26 by sperron           #+#    #+#             */
-/*   Updated: 2024/05/21 15:08:13 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/18 16:10:01 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 // funtions partie 1
 int				ft_isprint(int c);
 int				ft_isdigit(int c);
+char			*ft_strcat(char *s1, const char *s2);
+int				ft_isspace(char str);
 int				ft_isascii(int c);
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
@@ -46,7 +48,7 @@ void			*ft_calloc(size_t nmemb, size_t size);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s1, char const *set);
-char			**ft_split(char const *s, char c);
+char			**ft_split(char const *s, char *c);
 char			*ft_itoa(int n);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void			ft_striteri(char *s, void (*f)(unsigned int, char*));

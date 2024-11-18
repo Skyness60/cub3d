@@ -6,16 +6,22 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:15:02 by sperron           #+#    #+#             */
-/*   Updated: 2024/05/22 16:10:37 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/18 14:35:27 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int	in_charset(char s, char c)
+unsigned int	in_charset(char s, char *c)
 {
-	if (s == c)
-		return (1);
+	int	i;
+
+	i = -1;
+	while (c[++i])
+	{
+		if (s == c[i])
+			return (1);
+	}
 	return (0);
 }
 
@@ -32,7 +38,7 @@ void	ft_free_split(char **splitted)
 	free(splitted);
 }
 
-unsigned int	count_words(char const *s, char c)
+unsigned int	count_words(char const *s, char *c)
 {
 	unsigned int	i;
 	unsigned int	words;
@@ -57,7 +63,7 @@ unsigned int	count_words(char const *s, char c)
 	return (words);
 }
 
-char	*write_word(char const *s, char c)
+char	*write_word(char const *s, char *c)
 {
 	unsigned int	i;
 	unsigned int	size;
@@ -82,7 +88,7 @@ char	*write_word(char const *s, char c)
 	return (word);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char *c)
 {
 	unsigned int	words;
 	unsigned int	i;

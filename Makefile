@@ -13,7 +13,12 @@ LINKLIBS =	-L./export/libft -lft \
 SRC = 		src/cub3d.c \
 			src/parsing/init.c \
 			src/parsing/ft_free.c \
-			src/parsing/cub.c
+			src/parsing/cub.c \
+			src/parsing/cub_file.c \
+			src/parsing/cub_map.c \
+			src/parsing/cub_texture.c \
+			src/parsing/cub_texture_color.c \
+			src/parsing/debug_map.c
 
 MLX_PATH = ./mlx/
 

@@ -6,34 +6,33 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 07:59:08 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/18 08:45:43 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/18 15:30:23 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int	ft_puthexa(char form, long double nbr, int fd)
+int	ft_puthexa(char form, unsigned int nbr, int fd)
 {
 	int		count;
 	char	*hexa;
 
-	count = 0;
 	hexa = NULL;
 	if (form == 'x')
 		hexa = "0123456789abcdef";
 	else if (form == 'X')
 		hexa = "0123456789ABCDEF";
-	if (nbr < 0)
+	if (nbr < 16)
 	{
-		nbr = -nbr;
-		write(fd, "-", 1);
-		count++;
+		pf_char('0', fd);
+		count = 1;
 	}
+	else
+		count = 0;
 	if (nbr >= 16)
-		count += ft_puthexa(form, ((unsigned long) nbr / 16), fd);
-	pf_char(hexa[(unsigned long)nbr % 16], fd);
-	count++;
-	return (count);
+		count += ft_puthexa(form, nbr / 16, fd);
+	pf_char(hexa[nbr % 16], fd);
+	return (count + 1);
 }
 
 int	pf_putnbr_unsigned(unsigned int n, int fd)

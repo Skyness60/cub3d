@@ -39,6 +39,8 @@ typedef struct s_cub
 	t_texture				*texture;
 	unsigned long			hex_floor;
 	unsigned long			hex_ceiling;
+	char					*char_floor;
+	char					*char_ceiling;
 	t_map					*map;
 	int						width;
 	int						height;
@@ -55,12 +57,25 @@ typedef struct	s_data
 
 }				t_data;
 
+// utils
+size_t	ft_tablen(char **tab);
+
 // init 
 void	init_data(t_data **data_ptr);
 
 // free
 void	clear_all(t_data *data);
 
-// map
+// cub
 int		set_cub(t_data *data, char *av);
+char	**read_cub(char *av, t_data *data);
+void	read_map(char **file, t_data *data);
+void	read_texture(char **file, t_data *data);
+void	check_color(t_data *data, char **tab, int i, bool check);
+
+
+
+
+// TEMPORAIRE 
+void	debug_map(t_data *data);
 #endif // !CUB3D_H
