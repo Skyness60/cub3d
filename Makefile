@@ -1,6 +1,9 @@
 NAME = cub3d
+
 CC = cc -g3
-CFLAGS = -Wall -Wextra -Werror
+
+CFLAGS = -Wall -Wextra -Werror -MMD -MP
+
 LINKLIBS =	-L./export/libft -lft \
 			-L./export/garbage_descriptor -lgarbage_descriptor \
 			-L./export/printf -lftprintf \
@@ -8,6 +11,12 @@ LINKLIBS =	-L./export/libft -lft \
 			-L./export/garbage_collector -lgarbage_collector
 
 SRC = 		src/cub3d.c \
+
+MLX_PATH = ./mlx/
+
+MINI_LIBX = MiniLibX
+
+MLX_FLAGS = -lmlx -lmlx_Linux -lX11 -lXext -lm
 
 OBJECTS = $(SRC:.c=.o)
 #################################################################################
@@ -38,6 +47,7 @@ $(NAME) : $(OBJ)
 	@make -C ./export/garbage_descriptor --no-print-directory
 	@make -C ./export/printf --no-print-directory
 	@make -C ./export/gnl --no-print-directory
+	@make -C $(MLX_PATH) --no-print-directory
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LINKLIBS)
 	@echo $(BLUE)✅ $@ built! $(NC)
 
@@ -52,6 +62,7 @@ fclean:	clean
 	@make fclean -C ./export/garbage_descriptor --no-print-directory
 	@make fclean -C ./export/printf --no-print-directory
 	@make fclean -C ./export/gnl --no-print-directory
+	@make clean -C ${MLX_PATH} --no-print-directory
 	@echo $(RED)🗑️ $(NAME) and $(BONUS) deleted! $(NC)
 
 re: fclean all
