@@ -33,7 +33,7 @@ static char	*ft_free(char *buffer, char *buf)
 {
 	char	*temp;
 
-	temp = ft_strjoin(buffer, buf);
+	temp = gnl_strjoin(buffer, buf);
 	free(buffer);
 	return (temp);
 }
@@ -76,7 +76,7 @@ static char	*ft_next(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
-	line = ft_calloc((ft_strlen(buffer) - i + 1), sizeof(*buffer));
+	line = gnl_calloc((gnl_strlen(buffer) - i + 1), sizeof(*buffer));
 	if (!line)
 		return (NULL);
 	j = 0;
@@ -88,7 +88,7 @@ static char	*ft_next(char *buffer)
 }
 
 /**
- * ft_line - Extrait la premiere ligne du buffer.
+ * gnl_line - Extrait la premiere ligne du buffer.
  *
  * @param buffer: La chaine de caracteres 
  * contenant les donnees lues.
@@ -123,7 +123,7 @@ static char	*ft_line(char *buffer)
 		return (NULL);
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	line = ft_calloc(i + 2, sizeof(char));
+	line = gnl_calloc(i + 2, sizeof(char));
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -165,8 +165,8 @@ static char	*read_file(int fd, char *res)
 	int		byte_read;
 
 	if (!res)
-		res = ft_calloc(1, 1);
-	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+		res = gnl_calloc(1, 1);
+	buffer = gnl_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buffer)
 		return (NULL);
 	byte_read = 1;
@@ -181,7 +181,7 @@ static char	*read_file(int fd, char *res)
 		}
 		buffer[byte_read] = 0;
 		res = ft_free(res, buffer);
-		if (ft_strchr(buffer, '\n'))
+		if (gnl_strchr(buffer, '\n'))
 			break ;
 	}
 	free(buffer);
@@ -218,13 +218,13 @@ static char	*read_file(int fd, char *res)
  * - Verifie si le buffer est NULL apres la 
  * tentative de lecture
  *
- * line = ft_line(buffer):
- * - Appelle une fonction auxiliaire `ft_line` 
+ * line = gnl_line(buffer):
+ * - Appelle une fonction auxiliaire `gnl_line` 
  * pour extraire la ligne courante du buffer. 
  * La ligne extraite est stockee dans `line`.
  *
- * buffer = ft_next(buffer):
- * - Appelle une fonction auxiliaire `ft_next` 
+ * buffer = gnl_next(buffer):
+ * - Appelle une fonction auxiliaire `gnl_next` 
  * pour mettre a jour le buffer en supprimant 
  * les donnees deja lues. Prepare le buffer 
  * pour la prochaine lecture.
@@ -234,8 +234,8 @@ static char	*read_file(int fd, char *res)
  *
  * Notes :
  * - Cette fonction suppose que les fonctions 
- * auxiliaires `read_file`, `ft_line` et 
- * `ft_next` sont correctement implementees 
+ * auxiliaires `read_file`, `gnl_line` et 
+ * `gnl_next` sont correctement implementees 
  * pour gerer les operations specifiques.
  * - Le buffer statique permet de conserver 
  * l'etat entre les appels successifs de 

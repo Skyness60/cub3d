@@ -6,7 +6,9 @@ CFLAGS = -Wall -Wextra -Werror -I${INCLUDES}
 
 NAME = libftgnl.a
 
-FUNCGNL =	get_next_line.c
+FUNCGNL =	get_next_line.c \
+			get_next_line_utils.c
+
 SRCS = ${FUNCGNL}
 
 OBJS = ${SRCS:.c=.o} 

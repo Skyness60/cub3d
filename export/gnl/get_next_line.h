@@ -23,4 +23,10 @@
 
 char	*get_next_line(int fd);
 
+
+char	*gnl_strjoin(char const *s1, char const *s2);
+char	*gnl_strchr(const char *string, int searchedChar);
+void	gnl_bzero(void *s, unsigned int n);
+void	*gnl_calloc(unsigned int count, unsigned int size);
+size_t	gnl_strlen(const char *theString);
 #endif

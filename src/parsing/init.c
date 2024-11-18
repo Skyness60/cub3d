@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:03:37 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/18 10:57:42 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/18 12:12:06 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,6 @@ static void	allocate_memory(void **ptr, size_t size, const char *err_msg)
 		ft_dprintf(2, "%s\n", err_msg);
 		exit(1);
 	}
-}
-
-static void	init_map(t_map *map)
-{
-	map->map = NULL;
-	map->width = 0;
-	map->height = 0;
 }
 
 static void	init_texture(t_texture *texture, int count)
@@ -44,12 +37,22 @@ static void	init_texture(t_texture *texture, int count)
 		i++;
 	}
 }
-
-static void	init_trash_pointers(t_data *data)
+static void	init_cub(t_cub *cub, t_data *data)
 {
-	add_ptr(data->trash_ptr, data->map);
-	add_ptr(data->trash_ptr, data->texture);
+	cub->file = NULL;
+	cub->texture = NULL;
+	cub->height = 1;
+	cub->width = 0;
+	cub->map = NULL;
+	cub->hex_ceiling = 0;
+	cub->hex_floor = 0;
+	allocate_memory((void **)&cub->texture, sizeof(t_texture) * 4, "Malloc error for t_texture");
+	init_texture(cub->texture, 4);
+	add_ptr(data->trash_ptr, cub->texture);
+	allocate_memory((void **)&cub->map, sizeof(t_map), "Malloc error for t_map");
+	add_ptr(data->trash_ptr, cub->map);
 }
+
 
 void	init_data(t_data **data_ptr)
 {
@@ -58,14 +61,14 @@ void	init_data(t_data **data_ptr)
 	data = NULL;
 	allocate_memory((void **)data_ptr, sizeof(t_data), "Malloc error for t_data");
 	data = *data_ptr;
-	allocate_memory((void **)&data->map, sizeof(t_map), "Malloc error for t_map");
-	init_map(data->map);
-	allocate_memory((void **)&data->texture, sizeof(t_texture) * 4, "Malloc error for t_texture");
-	init_texture(data->texture, 4);
 	allocate_memory((void **)&data->trash_ptr, sizeof(t_garb_c), "Malloc error for trash_ptr");
 	init_garbage_collector(data->trash_ptr);
 	allocate_memory((void **)&data->trash_fds, sizeof(t_garb_d), \
 	"Malloc error for trash_fds");
 	init_garbage_descriptor(data->trash_fds);
-	init_trash_pointers(data);
+	allocate_memory((void **)&data->cub, sizeof(t_cub), "Malloc error for t_cub");
+	init_cub(data->cub, data);
+	add_ptr(data->trash_ptr, data->cub);
+	data->look.dirX = 0;
+	data->look.dirY = 1;
 }

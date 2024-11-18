@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 08:35:41 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/18 11:01:06 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/18 12:12:26 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	main_cub3d(char *av)
 
 	(void)av;
 	init_data(&data);
-	debug_gc(data->trash_ptr);
+	set_cub(data, av);
+	for (int i = 0; i < data->cub->height; i++)
+		ft_printf("%s\n", data->cub->file[i]);
 	return (clear_all(data), 0);
 }
 

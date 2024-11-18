@@ -33,14 +33,25 @@ typedef struct	s_map
 	int		height;
 }				t_map;
 
-typedef struct	s_data
+typedef struct s_cub
 {
-	t_map					*map;
+	char					**file;
 	t_texture				*texture;
-	t_garb_c				*trash_ptr;
-	t_garb_d				*trash_fds;
 	unsigned long			hex_floor;
 	unsigned long			hex_ceiling;
+	t_map					*map;
+	int						width;
+	int						height;
+}				t_cub;
+
+
+typedef struct	s_data
+{
+	t_cub					*cub;
+	t_garb_c				*trash_ptr;
+	t_garb_d				*trash_fds;
+	t_look					look;
+
 
 }				t_data;
 
@@ -49,4 +60,7 @@ void	init_data(t_data **data_ptr);
 
 // free
 void	clear_all(t_data *data);
+
+// map
+int		set_cub(t_data *data, char *av);
 #endif // !CUB3D_H
