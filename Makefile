@@ -2,7 +2,7 @@ NAME = cub3d
 
 CC = cc -g3
 
-CFLAGS = -Wall -Wextra -Werror -MMD -MP
+CFLAGS = -Wall -Wextra -Werror
 
 LINKLIBS =	-L./export/libft -lft \
 			-L./export/garbage_descriptor -lgarbage_descriptor \

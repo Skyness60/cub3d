@@ -27,7 +27,11 @@
 [0;35m✅ obj/mlx_rgb.o built![0m
 [0;35m✅ obj/mlx_destroy_image.o built![0m
 [0;35m✅ obj/mlx_mouse.o built![0m
+[0;35m✅ obj/mlx_screen_size.o built![0m
 [0;35m✅ obj/mlx_destroy_display.o built![0m
 [0;34m🔨 Creating library...[0m
 [0;32m📚 libmlx.a and libmlx_Linux.a created successfully![0m
+gcc -I/usr/include -O3 -I.. -g   -c -o main.o main.c
+[0;32mBuilding mlx-test[0m  
+[0;32m Linking complete.[0m  
 [0;32mBuild successful.[0m  
