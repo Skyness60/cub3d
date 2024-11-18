@@ -6,13 +6,13 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:39:22 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/08 13:49:03 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/18 10:26:37 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/garbage_descriptor.h"
 
-void	clear_fds(t_garbage_descriptor *trash_fds)
+void	clear_fds(t_garb_d *trash_fds)
 {
 	size_t	i;
 

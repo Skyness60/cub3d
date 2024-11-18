@@ -28,10 +28,18 @@ typedef struct	s_map
 
 typedef struct	s_data
 {
-	t_map			map;
-	t_texture		*texture;
-	unsigned long	hex_floor;
-	unsigned long	hex_ceiling;
+	t_map					*map;
+	t_texture				*texture;
+	t_garb_c				*trash_ptr;
+	t_garb_d				*trash_fds;
+	unsigned long			hex_floor;
+	unsigned long			hex_ceiling;
 
 }				t_data;
+
+// init 
+void	init_data(t_data **data_ptr);
+
+// free
+void	clear_all(t_data *data);
 #endif // !CUB3D_H

@@ -6,13 +6,13 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:10:08 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/18 08:44:03 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/18 10:26:35 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/garbage_descriptor.h"
 
-void	add_fd(t_garbage_descriptor *trash_fds, int fd)
+void	add_fd(t_garb_d *trash_fds, int fd)
 {
 	int	*tmp;
 

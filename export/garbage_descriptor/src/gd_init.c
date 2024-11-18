@@ -6,13 +6,13 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:23:52 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/18 08:44:20 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/18 10:26:46 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/garbage_descriptor.h"
 
-void	init_garbage_descriptor(t_garbage_descriptor *trash_fds)
+void	init_garbage_descriptor(t_garb_d *trash_fds)
 {
 	trash_fds->capacite = 2;
 	trash_fds->count = 0;

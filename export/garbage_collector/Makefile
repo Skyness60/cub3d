@@ -16,7 +16,7 @@ CC = cc -g3
 CFLAGS = -Wall -Wextra -Werror
 
 SRC = src/gc_add.c src/gc_check.c src/gc_debug.c src/gc_free.c \
-      src/gc_init.c src/gc_remove.c src/gc_utils.c
+      src/gc_init.c src/gc_remove.c src/gc_utils.c src/handle_error.c
 
 OBJECTS = $(SRC:.c=.o)
 

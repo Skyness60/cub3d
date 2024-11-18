@@ -6,7 +6,7 @@
 #    By: sperron <sperron@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/08 12:43:23 by sperron           #+#    #+#              #
-#    Updated: 2024/11/18 07:32:08 by sperron          ###   ########.fr        #
+#    Updated: 2024/11/18 10:41:17 by sperron          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ CFLAGS = -Wall -Wextra -Werror
 SRC = src/gd_add.c \
 	src/gd_init.c \
 	src/gd_clear.c \
-	src/gd_utils.c
+	src/gd_utils.c \
+	src/gd_error.c
 
 OBJECTS = $(SRC:.c=.o)
 

@@ -11,6 +11,8 @@ LINKLIBS =	-L./export/libft -lft \
 			-L./export/garbage_collector -lgarbage_collector
 
 SRC = 		src/cub3d.c \
+			src/parsing/init.c \
+			src/parsing/ft_free.c
 
 MLX_PATH = ./mlx/
 
