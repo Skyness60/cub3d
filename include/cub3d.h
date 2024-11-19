@@ -36,6 +36,7 @@ typedef struct	s_map
 typedef struct s_cub
 {
 	char					**file;
+	char					*file_without_split;
 	t_texture				*texture;
 	unsigned long			hex_floor;
 	unsigned long			hex_ceiling;
@@ -67,13 +68,14 @@ void	init_data(t_data **data_ptr);
 void	clear_all(t_data *data);
 
 // cub
+int		check_name(char *av);
 int		set_cub(t_data *data, char *av);
 char	**read_cub(char *av, t_data *data);
 void	read_map(char **file, t_data *data);
 void	read_texture(char **file, t_data *data);
 void	check_color(t_data *data, char **tab, int i, bool check);
-
-
+int		check_xpm(char *av);
+int		check_valid_map(t_data *data);
 
 
 // TEMPORAIRE 

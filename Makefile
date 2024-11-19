@@ -18,7 +18,8 @@ SRC = 		src/cub3d.c \
 			src/parsing/cub_map.c \
 			src/parsing/cub_texture.c \
 			src/parsing/cub_texture_color.c \
-			src/parsing/debug_map.c
+			src/parsing/debug_map.c \
+			src/parsing/check_name.c \
 
 MLX_PATH = ./mlx/
 

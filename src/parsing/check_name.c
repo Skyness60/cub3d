@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub.c                                              :+:      :+:    :+:   */
+/*   check_name.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 12:13:14 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 07:35:38 by sperron          ###   ########.fr       */
+/*   Created: 2024/11/19 07:04:01 by sperron           #+#    #+#             */
+/*   Updated: 2024/11/19 07:35:23 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int	set_cub(t_data *data, char *av)
+int	check_name(char *av)
 {
-	int	i;
+	int	len;
 
-	i = -1;
-	data->cub->file = read_cub(av, data);
-	read_map(data->cub->file, data);
-	read_texture(data->cub->file, data);
-	while (++i < 4)
-		if (check_xpm(data->cub->texture[i].path))
-			return (clear_all(data), \
-			ft_dprintf(2, "Error\nWrong texture extension\n"), exit(1), 1);
+	len = ft_strlen(av);
+	if (len < 4)
+		return (1);
+	if (ft_strncmp(av + len - 4, ".cub", 4))
+		return (1);
+	return (0);
+}
+
+int	check_xpm(char *av)
+{
+	int	len;
+
+	len = ft_strlen(av);
+	if (len < 4)
+		return (1);
+	if (ft_strncmp(av + len - 4, ".xpm", 4))
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:53:19 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/18 16:54:35 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/19 08:43:35 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	expand_map_capacity(t_data *data, int *map_capacity)
 	*map_capacity *= 2;
 	new_map = malloc(*map_capacity * sizeof(char *));
 	if (!new_map)
-		return ;
+		return (clear_all(data), ft_dprintf(2, "Error\nMalloc error\n"), \
+		exit(1));
 	k = -1;
 	while (++k < data->cub->map->height)
 		new_map[k] = data->cub->map->map[k];
@@ -51,7 +52,7 @@ bool	is_line_valid(char *line)
 	{
 		if (line[j] != 'E' && line[j] != 'C' && line[j] != '0' \
 			&& line[j] != '1' && line[j] != 'N' && line[j] != 'S' \
-			&& line[j] != 'W' && !ft_isspace(line[j]))
+			&& line[j] != 'W' && !ft_isspace(line[j]) && ft_strlen(line) == 1)
 			return (false);
 	}
 	return (true);
@@ -62,7 +63,12 @@ void	add_map_line(t_data *data, char *line, int *map_capacity)
 	if (data->cub->map->height >= *map_capacity)
 		expand_map_capacity(data, map_capacity);
 	data->cub->map->map[data->cub->map->height] = ft_strdup(line);
+	if (!data->cub->map->map[data->cub->map->height])
+		return (clear_all(data), ft_dprintf(2, "Error\nMalloc error\n"), \
+		exit(1));
 	add_ptr(data->trash_ptr, data->cub->map->map[data->cub->map->height]);
+	if (data->cub->map->width < (int) ft_strlen(line))
+		data->cub->map->width = ft_strlen(line);
 	data->cub->map->height++;
 }
 
@@ -80,6 +86,7 @@ void	read_map(char **file, t_data *data)
 		return ;
 	add_ptr(data->trash_ptr, data->cub->map->map);
 	data->cub->map->height = 0;
+	data->cub->map->width = 0;
 	while (file[++i])
 	{
 		if (!in_map && is_map_start(file[i]))

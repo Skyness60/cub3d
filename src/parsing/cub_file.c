@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:23:11 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/18 14:44:04 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/19 07:59:55 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*accumulate_lines(int fd, t_data *data)
 		if (!holder_map)
 			return (NULL);
 	}
-	return (holder_map);
+	return (data->cub->file_without_split = holder_map, holder_map);
 }
 
 size_t	ft_tablen(char **tab)

@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:03:37 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/18 16:51:38 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/19 08:43:26 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	init_texture(t_texture *texture, int count)
 static void	init_cub(t_cub *cub, t_data *data)
 {
 	cub->file = NULL;
+	cub->file_without_split = NULL;
 	cub->texture = NULL;
 	cub->height = 1;
 	cub->width = 0;
