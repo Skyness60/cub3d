@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:00:51 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/18 16:56:04 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/19 16:41:59 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*ft_hexa_to_str(t_data *data, unsigned int nbr)
 	result[len] = '\0', add_ptr(data->trash_ptr, result), result);
 }
 
-static char	*create_color_string(t_data *data, char **rgb)
+static char	*cs(t_data *data, char **rgb)
 {
 	char	*color_str;
 	char	*hex_value;
@@ -88,24 +88,25 @@ void	check_color(t_data *data, char **tab, int i, bool check)
 	char	**rgb;
 	int		k;
 	int		j;
-	char	*color_str;
 
+	if ((check && data->cub->char_floor[0] != '\0') \
+	|| (!check && data->cub->char_ceiling[0] != '\0'))
+		return (close_all(data, "Duplicate color"));
 	k = -1;
 	rgb = ft_split(tab[i], ",FC \t\n\v\f");
 	if (!rgb)
-		return (clear_all(data), ft_dprintf(2, "Error\nMalloc error\n"), exit(1));
+		return (close_all(data, "Malloc error"));
 	add_ptr_tab(data->trash_ptr, (void **)rgb, ft_tablen(rgb), true);
 	while (rgb[++k])
 	{
 		j = -1;
-		if (!ft_isdigit(rgb[k][++j]) || ft_tablen(rgb) != 3)
-			return (clear_all(data), ft_dprintf(2, "Error\nInvalid color\n"), \
-			exit(1));
+		while (rgb[k][++j])
+			if (!ft_isdigit(rgb[k][j]) || ft_tablen(rgb) != 3)
+				return (close_all(data, "Wrong color format"));
 	}
-	color_str = create_color_string(data, rgb);
 	if (check == true)
-		data->cub->char_floor = color_str;
-	else
-		data->cub->char_ceiling = color_str;
-	add_ptr(data->trash_ptr, color_str);
+		return (data->cub->char_floor = cs(data, rgb), \
+		add_ptr(data->trash_ptr, data->cub->char_floor));
+	return (data->cub->char_ceiling = cs(data, rgb), \
+	add_ptr(data->trash_ptr, data->cub->char_ceiling));
 }

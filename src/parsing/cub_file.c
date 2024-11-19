@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:23:11 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 07:59:55 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/19 16:40:36 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,6 @@ static char	*accumulate_lines(int fd, t_data *data)
 	return (data->cub->file_without_split = holder_map, holder_map);
 }
 
-size_t	ft_tablen(char **tab)
-{
-	size_t	i;
-
-	i = 0;
-	if (!tab)
-		return (0);
-	while (tab[i])
-		i++;
-	return (i);
-}
-
 char	**read_cub(char *av, t_data *data)
 {
 	int		fd;
@@ -83,14 +71,11 @@ char	**read_cub(char *av, t_data *data)
 	holder_map = accumulate_lines(fd, data);
 	add_ptr(data->trash_ptr, holder_map);
 	if (!holder_map)
-		return (clear_all(data), ft_dprintf(2, "Error\nMalloc error\n"), \
-		exit(1), NULL);
+		return (close_all(data, "Malloc Error"), NULL);
 	map = ft_split(holder_map, "\n");
 	data->cub->height = ft_tablen(map);
 	add_ptr_tab(data->trash_ptr, (void **)map, data->cub->height, true);
 	if (!map || !map[0] || map[0][0] == '\0')
-		return (clear_all(data), \
-		ft_dprintf(2, "Error\nEmpty file\n"), exit(1), NULL);
-	remove_ptr(data->trash_ptr, holder_map);
+		return (close_all(data, "Empty File"), NULL);
 	return (map);
 }

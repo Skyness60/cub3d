@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:25:35 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 13:17:43 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/19 16:42:47 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	check_orientation(t_data *data, char **tab, int i)
 {
 	t_texture	*texture;
-	
+
 	texture = NULL;
 	if (tab[i][0] == 'N' && tab[i][1] == 'O')
 		texture = &data->cub->texture[NORTH];
@@ -28,12 +28,10 @@ void	check_orientation(t_data *data, char **tab, int i)
 	if (texture)
 	{
 		if (texture->path)
-			return (clear_all(data), \
-			ft_dprintf(2, "Error\nDuplicate texture\n"), exit(1));
+			return (close_all(data, "Duplicate texture"));
 		texture->path = ft_strdup(tab[i + 1]);
 		if (!texture->path)
-			return (clear_all(data), \
-			ft_dprintf(2, "Error\nMalloc error\n"), exit(1));
+			return (close_all(data, "Malloc error"));
 		add_ptr(data->trash_ptr, texture->path);
 	}
 }
@@ -45,8 +43,7 @@ static void	get_texture(t_data *data, char *line)
 
 	tab = ft_split(line, " \t\n\v\f");
 	if (!tab)
-		return (clear_all(data), \
-		ft_dprintf(2, "Error\nMalloc error\n"), exit(1));
+		return (close_all(data, "Malloc error"));
 	add_ptr_tab(data->trash_ptr, (void **)tab, ft_tablen(tab), true);
 	i = -1;
 	while (tab[++i])
@@ -79,9 +76,7 @@ void	read_texture(char **file, t_data *data)
 	}
 	if (!data->cub->texture[NORTH].path || !data->cub->texture[SOUTH].path || \
 		!data->cub->texture[WEST].path || !data->cub->texture[EAST].path)
-		return (clear_all(data), \
-		ft_dprintf(2, "Error\nMissing texture path\n"), exit(1));
+		return (close_all(data, "Missing texture"));
 	if (data->cub->char_ceiling[0] == '\0' || data->cub->char_floor[0] == '\0')
-		return (clear_all(data), \
-		ft_dprintf(2, "Error\nMissing color\n"), exit(1));
+		return (close_all(data, "Missing color"));
 }

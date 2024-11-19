@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub.c                                              :+:      :+:    :+:   */
+/*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 12:13:14 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 15:38:18 by sperron          ###   ########.fr       */
+/*   Created: 2024/11/19 15:57:05 by sperron           #+#    #+#             */
+/*   Updated: 2024/11/19 15:57:09 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-int	set_cub(t_data *data, char *av)
+size_t	ft_tablen(char **tab)
 {
-	int	i;
+	size_t	i;
 
-	i = -1;
-	data->cub->file = read_cub(av, data);
-	read_map(data->cub->file, data);
-	read_texture(data->cub->file, data);
-	while (++i < 4)
-		if (check_xpm(data->cub->texture[i].path))
-			return (close_all(data, "Wrong texture extension"), 1);
-	check_map(data);
-	return (0);
+	i = 0;
+	if (!tab)
+		return (0);
+	while (tab[i])
+		i++;
+	return (i);
 }

@@ -6,9 +6,65 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:12:32 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 09:12:36 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/19 16:52:38 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
+static int	check_line(char **line, t_data *data)
+{
+	int	j;
+	int	i;
+
+	i = -1;
+	while (++i < data->cub->map->height)
+	{
+		j = -1;
+		if (ft_strlen(line[i]) < 3)
+			return (false);
+		while (line[i][++j] != '\0')
+			if (line[i][j] != 'E' && line[i][j] != 'C' && line[i][j] != '0' \
+				&& line[i][j] != '1' && line[i][j] != 'N' && line[i][j] != \
+				'S' && line[i][j] != 'W' && !ft_isspace(line[i][j]))
+				return (false);
+	}
+	return (true);
+}
+
+static bool	check_iswall(char **map, t_data *data)
+{
+	int	i;
+	int	j;
+	int	len;
+
+	i = 0;
+	j = -1;
+	while (map[0][i] != '\0')
+	{
+		if (map[0][i] != '1')
+			return (false);
+		i++;
+	}
+	i = 0;
+	while (i < data->cub->map->height)
+		i++;
+	len = ft_strlen(map[i - 1]);
+	while (++j < len)
+		if (map[i - 1][j] != '1')
+			return (false);
+	i = 0;
+	while (++i < data->cub->map->height)
+		if (map[i][0] != '1' || map[i][ft_strlen(map[i]) - 1] != '1')
+			return (false);
+	return (true);
+}
+
+int	check_map(t_data *data)
+{
+	if (data->cub->map->map && (check_line(data->cub->map->map, data) == \
+	true && check_iswall(data->cub->map->map, data) == true))
+		return (ft_dprintf(1, "map valid\n"), true);
+	else
+		return (close_all(data, "Map error wall not close"), false);
+}

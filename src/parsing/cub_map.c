@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:53:19 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 09:02:43 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/19 16:40:11 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ void	expand_map_capacity(t_data *data, int *map_capacity)
 	*map_capacity *= 2;
 	new_map = malloc(*map_capacity * sizeof(char *));
 	if (!new_map)
-		return (clear_all(data), ft_dprintf(2, "Error\nMalloc error\n"), \
-		exit(1));
+		return (close_all(data, "Malloc error"));
 	k = -1;
 	while (++k < data->cub->map->height)
 		new_map[k] = data->cub->map->map[k];
-	free(data->cub->map->map);
+	remove_ptr(data->trash_ptr, data->cub->map->map);
 	data->cub->map->map = new_map;
 	add_ptr(data->trash_ptr, new_map);
 }
@@ -66,8 +65,7 @@ void	add_map_line(t_data *data, char *line, int *map_capacity)
 		expand_map_capacity(data, map_capacity);
 	data->cub->map->map[data->cub->map->height] = ft_strdup(line);
 	if (!data->cub->map->map[data->cub->map->height])
-		return (clear_all(data), ft_dprintf(2, "Error\nMalloc error\n"), \
-		exit(1));
+		return (close_all(data, "Malloc error"));
 	add_ptr(data->trash_ptr, data->cub->map->map[data->cub->map->height]);
 	if (data->cub->map->width < (int) ft_strlen(line))
 		data->cub->map->width = ft_strlen(line);
@@ -96,9 +94,8 @@ void	read_map(char **file, t_data *data)
 		if (in_map)
 		{
 			add_map_line(data, file[i], &map_capacity);
-			if (!is_line_valid(file[i]))
-				return (clear_all(data), ft_dprintf(2, \
-				"Error\nInvalid map\n"), exit(1));
+			if (!is_line_valid(file[i]) || check_empty_line(data) == true)
+				return (close_all(data, "Invalid map"));
 		}
 	}
 }

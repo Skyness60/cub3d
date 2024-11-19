@@ -60,6 +60,7 @@ typedef struct	s_data
 
 // utils
 size_t	ft_tablen(char **tab);
+void	close_all(t_data *data, char *stingError);
 
 // init 
 void	init_data(t_data **data_ptr);
@@ -76,7 +77,8 @@ void	read_texture(char **file, t_data *data);
 void	check_color(t_data *data, char **tab, int i, bool check);
 int		check_xpm(char *av);
 int		check_valid_map(t_data *data);
-
+int		check_map(t_data *data);
+bool	check_empty_line(t_data *data);
 
 // TEMPORAIRE 
 void	debug_map(t_data *data);
