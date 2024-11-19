@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:53:19 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 08:43:35 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/19 09:02:43 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,13 @@ bool	is_line_valid(char *line)
 	int	j;
 
 	j = -1;
+	if (ft_strlen(line) < 3)
+		return (false);
 	while (line[++j] != '\0')
 	{
 		if (line[j] != 'E' && line[j] != 'C' && line[j] != '0' \
 			&& line[j] != '1' && line[j] != 'N' && line[j] != 'S' \
-			&& line[j] != 'W' && !ft_isspace(line[j]) && ft_strlen(line) == 1)
+			&& line[j] != 'W' && !ft_isspace(line[j]))
 			return (false);
 	}
 	return (true);

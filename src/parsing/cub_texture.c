@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:25:35 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 07:15:52 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/19 13:17:43 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,27 @@
 
 void	check_orientation(t_data *data, char **tab, int i)
 {
+	t_texture	*texture;
+	
+	texture = NULL;
 	if (tab[i][0] == 'N' && tab[i][1] == 'O')
-	{
-		data->cub->texture[NORTH].path = ft_strdup(tab[i + 1]);
-		add_ptr(data->trash_ptr, data->cub->texture[NORTH].path);
-	}
+		texture = &data->cub->texture[NORTH];
 	else if (tab[i][0] == 'S' && tab[i][1] == 'O')
-	{
-		data->cub->texture[SOUTH].path = ft_strdup(tab[i + 1]);
-		add_ptr(data->trash_ptr, data->cub->texture[SOUTH].path);
-	}
+		texture = &data->cub->texture[SOUTH];
 	else if (tab[i][0] == 'W' && tab[i][1] == 'E')
-	{
-		data->cub->texture[WEST].path = ft_strdup(tab[i + 1]);
-		add_ptr(data->trash_ptr, data->cub->texture[WEST].path);
-	}
+		texture = &data->cub->texture[WEST];
 	else if (tab[i][0] == 'E' && tab[i][1] == 'A')
+		texture = &data->cub->texture[EAST];
+	if (texture)
 	{
-		data->cub->texture[EAST].path = ft_strdup(tab[i + 1]);
-		add_ptr(data->trash_ptr, data->cub->texture[EAST].path);
+		if (texture->path)
+			return (clear_all(data), \
+			ft_dprintf(2, "Error\nDuplicate texture\n"), exit(1));
+		texture->path = ft_strdup(tab[i + 1]);
+		if (!texture->path)
+			return (clear_all(data), \
+			ft_dprintf(2, "Error\nMalloc error\n"), exit(1));
+		add_ptr(data->trash_ptr, texture->path);
 	}
 }
 
