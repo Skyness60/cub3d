@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:12:32 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 13:42:53 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 13:44:17 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,34 +31,6 @@ static int	check_line(char **line, t_data *data)
 	}
 	return (true);
 }
-
-//static bool	check_iswall(char **map, t_data *data)
-//{
-//	int	i;
-//	int	j;
-//	int	len;
-
-//	i = 0;
-//	j = -1;
-//	while (map[0][i] != '\0')
-//	{
-//		if (map[0][i] != '1')
-//			return (false);
-//		i++;
-//	}
-//	i = 0;
-//	while (i < data->cub->map->height)
-//		i++;
-//	len = ft_strlen(map[i - 1]);
-//	while (++j < len)
-//		if (map[i - 1][j] != '1')
-//			return (false);
-//	i = 0;
-//	while (++i < data->cub->map->height)
-//		if (map[i][0] != '1' || map[i][ft_strlen(map[i]) - 1] != '1')
-//			return (false);
-//	return (true);
-//}
 
 static bool	check_player(char **map, t_data *data)
 {
