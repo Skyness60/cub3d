@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 08:49:14 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 15:29:58 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:19:27 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,24 @@
 
 void	flood_fill(t_data *data, int x, int y, int height)
 {
-	if (x < 0 || y < 0 || x >= height \
-	|| y >= (int)ft_strlen(data->cub->map->map_copy[y]) \
-	|| data->cub->map->map_copy[y][x] == '1' \
+	if (x < 0 || y < 0 || x >= (int)ft_strlen(data->cub->map->map_copy[y]) \
+	|| y >= height || data->cub->map->map_copy[y][x] == '1' \
 	|| data->cub->map->map_copy[y][x] == 'X')
 		return ;
-	if ((x == 0 || y == 0 || x == height - 1 \
-	|| y == (int)ft_strlen(data->cub->map->map_copy[y]) - 1) \
-	&& (data->cub->map->map_copy[y][x] == '0' \
+	if ((x == 0 || y == 0 || x == data->cub->map->width - 1 \
+	|| y == height - 1) && (data->cub->map->map_copy[y][x] == '0' \
 	|| data->cub->map->map_copy[y][x] == ' '))
-		return (close_all(data, "Map not close"));
+		return (close_all(data, "Map not closed: hole on the border"));
+	if (y > 0 && data->cub->map->map_copy[y - 1][x] != '1' \
+	&& data->cub->map->map_copy[y - 1][x] != 'X' && \
+	data->cub->map->map_copy[y - 1][x] != ' ' \
+	&& data->cub->map->map_copy[y - 1][x] != '0')
+		close_all(data, "Map not closed: hole above");
+	if (y < height - 1 && data->cub->map->map_copy[y + 1][x] != '1' \
+	&& data->cub->map->map_copy[y + 1][x] != 'X' \
+	&& data->cub->map->map_copy[y + 1][x] != ' ' \
+	&& data->cub->map->map_copy[y + 1][x] != '0')
+		close_all(data, "Map not closed: hole below");
 	data->cub->map->map_copy[y][x] = 'X';
 	flood_fill(data, x - 1, y, height);
 	flood_fill(data, x + 1, y, height);

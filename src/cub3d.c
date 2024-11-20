@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 08:35:41 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 15:30:20 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:17:24 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main_cub3d(char *av)
 	set_cub(data, av);
 	if (data->cub->map->height < 3 || data->cub->map->width < 3)
 		return (close_all(data, "Map error"), 1);
-	open_cub3d(data);	
+	open_cub3d(data);
 	return (clear_all(data), 0);
 }
 

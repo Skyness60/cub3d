@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:30:48 by jlebard           #+#    #+#             */
-/*   Updated: 2024/11/20 15:29:58 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:18:38 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static void	display_ray(t_data *data, t_player *player, double angle)
 {
-	double	delta_X;
-	double	delta_Y;
-	
-	delta_X = CELL_SIZE / fabs(cos(angle));
-	delta_Y = CELL_SIZE / fabs(sin(angle)); 
+	double	delta_x;
+	double	delta_y;
+
+	delta_x = CELL_SIZE / fabs(cos(angle));
+	delta_y = CELL_SIZE / fabs(sin(angle));
 }
 
 static void	send_rays(t_data *data)
@@ -26,7 +26,7 @@ static void	send_rays(t_data *data)
 	double	ray_angle;
 	double	cam_angle;
 	int		i;
-	
+
 	i = 0;
 	cam_angle = data->player->angle;
 	while (i < WIN_WIDTH)
@@ -46,7 +46,7 @@ static void	starting_pov(t_data *data)
 	else if (data->player->orientation == 'W')
 		data->player->angle = PI;
 	else if (data->player->orientation == 'S')
-		data->player->angle =  3 * PI / 2;		
+		data->player->angle = 3 * PI / 2;
 }
 
 void	raycasting(t_data *data)
