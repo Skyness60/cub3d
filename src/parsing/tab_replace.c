@@ -6,29 +6,31 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:32:34 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 10:37:25 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 13:42:16 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
-static int calculate_new_length(const char *line)
+static int	calculate_new_length(const char *line)
 {
-	int i = 0;
-	int new_length = 0;
+	int	i;
+	int	new_length;
 
+	i = 0;
+	new_length = 0;
 	while (line[i] != '\0')
 	{
-		new_length += (line[i] == '\t') ? 4 : 1;
+		if (line[i] == '\t')
+			new_length += 4;
+		else
+			new_length++;
 		i++;
 	}
-	return new_length;
+	return (new_length);
 }
 
-static char *create_new_line(const char *line, int new_length, t_data *data)
+static char	*create_new_line(const char *line, int new_length, t_data *data)
 {
 	int		i;
 	int		j;
@@ -72,7 +74,7 @@ static void	replace_tabs_with_spaces_for_line(char **map, int row, t_data *data)
 
 void	replace_tabs_with_spaces(char **map, t_data *data)
 {
-	int row;
+	int	row;
 
 	row = -1;
 	while (map[++row])

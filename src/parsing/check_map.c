@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:12:32 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 13:25:46 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 13:42:53 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,7 @@ static bool	check_player(char **map, t_data *data)
 				data->player->orientation = 'E';
 			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'W' \
 				|| map[i][j] == 'E')
-			{
 				data->player->nb++;
-				break ;
-			}
 		}
 	}
 	if (data->player->nb == 0 || data->player->nb > 1)
@@ -95,8 +92,7 @@ static bool	check_player(char **map, t_data *data)
 int	check_map(t_data *data)
 {
 	if (data->cub->map->map && check_line(data->cub->map->map, data) == \
-	true &&  \
-	check_player(data->cub->map->map, data) == true && \
+	true && check_player(data->cub->map->map, data) == true && \
 	verify_win(data) == false)
 		return (ft_dprintf(1, "map valid\n"), false);
 	else
