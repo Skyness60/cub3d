@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:00:04 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 15:29:58 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:19:52 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	debug_map(t_data *data)
 	printf("Largeur : %d\n", data->cub->map->width);
 	printf("Hauteur : %d\n", data->cub->map->height);
 	printf("Map:\n");
-	for (int i = 0; i < data->cub->map->height; i++)
-		ft_printf("%s\n", data->cub->map->map[i]);
+	while (++i < data->cub->map->height)
+		printf("%s\n", data->cub->map->map[i]);
 	printf("=== Texture Stats ===\n");
 	printf("NO : %s\n", data->cub->texture[0].path);
 	printf("SO : %s\n", data->cub->texture[1].path);
