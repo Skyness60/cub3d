@@ -1,6 +1,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 # include "../export/ultimatelib.h"
+# include "../mlx/mlx.h"
 # include <math.h>
 
 # define PI 3.14159265358979323846
@@ -58,11 +59,17 @@ typedef struct s_player
 	int			y;
 }				t_player;
 
+typedef struct	s_mlx
+{
+	void	*mlx;
+	void	*win;
+}				t_mlx;
 
 typedef struct	s_data
 {
 	t_cub					*cub;
 	t_player				*player;
+	t_mlx					*mlx;
 	t_garb_c				*trash_ptr;
 	t_garb_d				*trash_fds;
 	bool					spawn;
@@ -95,6 +102,12 @@ int		verify_win(t_data *data);
 // raycasting
 void	raycasting(t_data *data);
 
+// game
+void	open_cub3d(t_data *data);
+
+// mlx
+int		handle_close(t_data *data);
+int		handle_close_keypress(int keycode, t_data *data);
 // TEMPORAIRE 
 void	debug_map(t_data *data);
 #endif // !CUB3D_H

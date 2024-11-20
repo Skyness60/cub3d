@@ -6,11 +6,11 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:53:19 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 11:41:54 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 15:29:58 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d.h"
 
 void	expand_map_capacity(t_data *data, int *map_capacity)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:03:37 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 14:40:13 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/11/20 15:29:58 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d.h"
 
 static void	allocate_memory(void **ptr, size_t size, char *err_msg, t_data *d)
 {
@@ -70,9 +70,14 @@ void	init_data(t_data *data)
 	"Malloc error for t_cub", data);
 	init_cub(data->cub, data);
 	add_ptr(data->trash_ptr, data->cub);
-	allocate_memory((void **)&data->player, sizeof(t_cub), \
+	allocate_memory((void **)&data->player, sizeof(t_player), \
 	"Malloc error for t_cub", data);
 	add_ptr(data->trash_ptr, data->player);
+	allocate_memory((void **)&data->mlx, sizeof(t_mlx), \
+	"Malloc error for t_cub", data);
+	add_ptr(data->trash_ptr, data->mlx);
+	data->mlx->mlx = NULL;
+	data->mlx->win = NULL;
 	data->player->orientation = '\0';
 	data->player->nb = 0;
 	data->spawn = 1;

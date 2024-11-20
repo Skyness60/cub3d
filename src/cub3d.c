@@ -6,11 +6,11 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 08:35:41 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 13:27:01 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 15:30:20 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "cub3d.h"
 
 int	main_cub3d(char *av)
 {
@@ -21,7 +21,9 @@ int	main_cub3d(char *av)
 		return (ft_dprintf(2, "Error\nMalloc error for t_data\n"), 1);
 	init_data(data);
 	set_cub(data, av);
-	//debug_map(data);
+	if (data->cub->map->height < 3 || data->cub->map->width < 3)
+		return (close_all(data, "Map error"), 1);
+	open_cub3d(data);	
 	return (clear_all(data), 0);
 }
 

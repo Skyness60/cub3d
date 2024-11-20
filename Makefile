@@ -2,7 +2,10 @@ NAME = cub3d
 
 CC = cc -g3
 
-CFLAGS = -Wall -Wextra -Werror
+INCLUDE_DIR = ./include/
+
+CFLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR)
+
 
 LINKLIBS =	-L./export/libft -lft \
 			-L./export/garbage_descriptor -lgarbage_descriptor \
@@ -11,21 +14,23 @@ LINKLIBS =	-L./export/libft -lft \
 			-L./export/garbage_collector -lgarbage_collector
 
 SRC = 		src/cub3d.c \
-			src/parsing/init.c \
-			src/parsing/ft_free.c \
-			src/parsing/cub.c \
-			src/parsing/cub_file.c \
-			src/parsing/cub_map.c \
-			src/parsing/cub_texture.c \
-			src/parsing/cub_texture_color.c \
-			src/parsing/debug_map.c \
-			src/parsing/check_name.c \
-			src/parsing/close_all.c \
-			src/parsing/check_map.c \
-			src/parsing/utils_parsing.c \
-			src/parsing/cub_map_utils.c \
-			src/parsing/flood_fill.c \
-			src/parsing/tab_replace.c
+			src/parsing/init/init.c \
+			src/parsing/utils/ft_free.c \
+			src/parsing/cub/cub.c \
+			src/parsing/cub/cub_file.c \
+			src/parsing/cub/cub_map.c \
+			src/parsing/cub/cub_texture.c \
+			src/parsing/cub/cub_texture_color.c \
+			src/parsing/tmp/debug_map.c \
+			src/parsing/check/check_name.c \
+			src/parsing/utils/close_all.c \
+			src/parsing/check/check_map.c \
+			src/parsing/utils/utils_parsing.c \
+			src/parsing/cub/cub_map_utils.c \
+			src/parsing/algo/flood_fill.c \
+			src/parsing/utils/tab_replace.c \
+			src/game/open_cub3d.c \
+			src/game/mlx/handle/handle_close.c \
 
 MLX_PATH = ./mlx/
 
@@ -63,7 +68,7 @@ $(NAME) : $(OBJ)
 	@make -C ./export/printf --no-print-directory
 	@make -C ./export/gnl --no-print-directory
 	@make -C $(MLX_PATH) --no-print-directory
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LINKLIBS)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LINKLIBS) -L$(MLX_PATH) $(MLX_FLAGS)
 	@echo $(BLUE)✅ $@ built! $(NC)
 
 clean:
