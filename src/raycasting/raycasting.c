@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:30:48 by jlebard           #+#    #+#             */
-/*   Updated: 2024/11/20 14:40:34 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/11/20 15:04:30 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 static void	display_ray(t_data *data, t_player *player, double angle)
 {
-	double	posX;
-	double	posY;
+	double	delta_X;
+	double	delta_Y;
 	
-	posX = player->x / WIN_WIDTH;
-	posY = player->y / WIN_HEIGHT;
-	
+	delta_X = CELL_SIZE / fabs(cos(angle));
+	delta_Y = CELL_SIZE / fabs(sin(angle)); 
 }
 
 static void	send_rays(t_data *data)

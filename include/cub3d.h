@@ -7,6 +7,7 @@
 # define FOV PI / 3
 # define WIN_HEIGHT 1080
 # define WIN_WIDTH 1920
+# define CELL_SIZE 16
 
 
 typedef enum e_orientation
