@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:03:37 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 15:29:47 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 10:16:33 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,8 @@ static void	init_cub(t_cub *cub, t_data *data)
 	add_ptr(data->trash_ptr, cub->map);
 }
 
-void	init_data(t_data **data_ptr)
+void	init_data(t_data *data)
 {
-	t_data	*data;
-
-	data = NULL;
-	allocate_memory((void **)data_ptr, sizeof(t_data), \
-	"Malloc error for t_data", data);
-	data = *data_ptr;
 	allocate_memory((void **)&data->trash_ptr, sizeof(t_garb_c), \
 	"Malloc error for trash_ptr", data);
 	init_garbage_collector(data->trash_ptr);
@@ -76,6 +70,11 @@ void	init_data(t_data **data_ptr)
 	"Malloc error for t_cub", data);
 	init_cub(data->cub, data);
 	add_ptr(data->trash_ptr, data->cub);
+	allocate_memory((void **)&data->player, sizeof(t_cub), \
+	"Malloc error for t_cub", data);
+	add_ptr(data->trash_ptr, data->player);
+	data->player->orientation = '\0';
+	data->player->nb = 0;
 	data->look.dirX = 0;
 	data->look.dirY = 1;
 }
