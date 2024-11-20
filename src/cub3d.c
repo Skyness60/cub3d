@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 08:35:41 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 08:00:55 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 13:27:01 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ int	main_cub3d(char *av)
 {
 	t_data	*data;
 
-	(void)av;
-	init_data(&data);
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (ft_dprintf(2, "Error\nMalloc error for t_data\n"), 1);
+	init_data(data);
 	set_cub(data, av);
 	//debug_map(data);
 	return (clear_all(data), 0);

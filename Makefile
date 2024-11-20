@@ -24,6 +24,8 @@ SRC = 		src/cub3d.c \
 			src/parsing/check_map.c \
 			src/parsing/utils_parsing.c \
 			src/parsing/cub_map_utils.c \
+			src/parsing/flood_fill.c \
+			src/parsing/tab_replace.c
 
 MLX_PATH = ./mlx/
 

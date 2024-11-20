@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:12:32 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 16:52:38 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 13:42:53 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,39 +32,69 @@ static int	check_line(char **line, t_data *data)
 	return (true);
 }
 
-static bool	check_iswall(char **map, t_data *data)
+//static bool	check_iswall(char **map, t_data *data)
+//{
+//	int	i;
+//	int	j;
+//	int	len;
+
+//	i = 0;
+//	j = -1;
+//	while (map[0][i] != '\0')
+//	{
+//		if (map[0][i] != '1')
+//			return (false);
+//		i++;
+//	}
+//	i = 0;
+//	while (i < data->cub->map->height)
+//		i++;
+//	len = ft_strlen(map[i - 1]);
+//	while (++j < len)
+//		if (map[i - 1][j] != '1')
+//			return (false);
+//	i = 0;
+//	while (++i < data->cub->map->height)
+//		if (map[i][0] != '1' || map[i][ft_strlen(map[i]) - 1] != '1')
+//			return (false);
+//	return (true);
+//}
+
+static bool	check_player(char **map, t_data *data)
 {
 	int	i;
 	int	j;
-	int	len;
 
-	i = 0;
-	j = -1;
-	while (map[0][i] != '\0')
-	{
-		if (map[0][i] != '1')
-			return (false);
-		i++;
-	}
-	i = 0;
-	while (i < data->cub->map->height)
-		i++;
-	len = ft_strlen(map[i - 1]);
-	while (++j < len)
-		if (map[i - 1][j] != '1')
-			return (false);
-	i = 0;
+	i = -1;
 	while (++i < data->cub->map->height)
-		if (map[i][0] != '1' || map[i][ft_strlen(map[i]) - 1] != '1')
-			return (false);
+	{
+		j = -1;
+		while (map[i][++j] != '\0')
+		{
+			if (map[i][j] == 'N')
+				data->player->orientation = 'N';
+			else if (map[i][j] == 'S')
+				data->player->orientation = 'S';
+			else if (map[i][j] == 'W')
+				data->player->orientation = 'W';
+			else if (map[i][j] == 'E')
+				data->player->orientation = 'E';
+			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'W' \
+				|| map[i][j] == 'E')
+				data->player->nb++;
+		}
+	}
+	if (data->player->nb == 0 || data->player->nb > 1)
+		return (close_all(data, "Player error"), false);
 	return (true);
 }
 
 int	check_map(t_data *data)
 {
-	if (data->cub->map->map && (check_line(data->cub->map->map, data) == \
-	true && check_iswall(data->cub->map->map, data) == true))
-		return (ft_dprintf(1, "map valid\n"), true);
+	if (data->cub->map->map && check_line(data->cub->map->map, data) == \
+	true && check_player(data->cub->map->map, data) == true && \
+	verify_win(data) == false)
+		return (ft_dprintf(1, "map valid\n"), false);
 	else
 		return (close_all(data, "Map error wall not close"), false);
 }
