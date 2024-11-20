@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:03:37 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 10:16:33 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 14:40:13 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,5 @@ void	init_data(t_data *data)
 	add_ptr(data->trash_ptr, data->player);
 	data->player->orientation = '\0';
 	data->player->nb = 0;
-	data->look.dirX = 0;
-	data->look.dirY = 1;
+	data->spawn = 1;
 }

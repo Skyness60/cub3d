@@ -3,21 +3,11 @@
 # include "../export/ultimatelib.h"
 # include <math.h>
 
-# define FOV 66
 # define PI 3.14159265358979323846
+# define FOV PI / 3
+# define WIN_HEIGHT 1080
+# define WIN_WIDTH 1920
 
-typedef struct s_vec
-{
-	double	x;
-	double	y;
-}	t_vec;
-
-typedef struct	s_look
-{
-	t_vec	*pos;
-	t_vec	*dir;
-	t_vec	*add;
-}	t_look;
 
 typedef enum e_orientation
 {
@@ -60,6 +50,7 @@ typedef struct s_cub
 
 typedef struct s_player
 {
+	double 		angle;
 	int			nb;
 	char		orientation;
 	int			x;
@@ -73,9 +64,7 @@ typedef struct	s_data
 	t_player				*player;
 	t_garb_c				*trash_ptr;
 	t_garb_d				*trash_fds;
-	t_look					look;
-
-
+	bool					spawn;
 }				t_data;
 
 // utils
@@ -101,6 +90,9 @@ int		check_valid_map(t_data *data);
 int		check_map(t_data *data);
 bool	check_empty_line(t_data *data);
 int		verify_win(t_data *data);
+
+// raycasting
+void	raycasting(t_data *data);
 
 // TEMPORAIRE 
 void	debug_map(t_data *data);

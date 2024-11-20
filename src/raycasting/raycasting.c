@@ -6,41 +6,56 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:30:48 by jlebard           #+#    #+#             */
-/*   Updated: 2024/11/20 08:30:14 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/11/20 14:40:34 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-t_vec	*add_vecs(t_data *data, t_vec *u, t_vec *v)
+static void	display_ray(t_data *data, t_player *player, double angle)
 {
-	t_vec	*add_bis;
-
-	add_bis = malloc(sizeof(t_vec));
-	if (!add_bis)
-		exit(EXIT_FAILURE);
-	add_ptr(data->trash_ptr, add_bis);
-	add_bis->x = u->x + v->x;
-	add_bis->y = u->y + v->y;
-	return (add_bis);
+	double	posX;
+	double	posY;
+	
+	posX = player->x / WIN_WIDTH;
+	posY = player->y / WIN_HEIGHT;
+	
 }
 
-void	ray_loop(t_data *data, t_look *look, int cell_size)
+static void	send_rays(t_data *data)
 {
-	double	tan;
+	double	ray_angle;
+	double	cam_angle;
 	int		i;
-
+	
 	i = 0;
-	look->add = add_vecs(data, look->dir, look->pos);
-	while(1)
+	cam_angle = data->player->angle;
+	while (i < WIN_WIDTH)
 	{
-		if (is_wall() == 1)
-		{
-			display_plane(i);
-			break ;
-		}
-		else
-			display_f_and_c(i);
-		i += cell_size;
+		ray_angle = cam_angle - (FOV / 2) + (i * FOV / WIN_WIDTH);
+		display_ray(data, data->player, ray_angle);
+		i++;
 	}
+}
+
+static void	starting_pov(t_data *data)
+{
+	if (data->player->orientation == 'N')
+		data->player->angle = PI / 2;
+	else if (data->player->orientation == 'E')
+		data->player->angle = 2 * PI;
+	else if (data->player->orientation == 'W')
+		data->player->angle = PI;
+	else if (data->player->orientation == 'S')
+		data->player->angle =  3 * PI / 2;		
+}
+
+void	raycasting(t_data *data)
+{
+	if (data->spawn == 1)
+	{
+		starting_pov(data);
+		data->spawn = 0;
+	}
+	send_rays(data);
 }

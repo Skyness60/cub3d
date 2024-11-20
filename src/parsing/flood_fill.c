@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 08:49:14 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 13:40:30 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 13:50:20 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 void	flood_fill(t_data *data, int x, int y, int height)
 {
 	if (x < 0 || y < 0 || x >= height \
-	|| y >= (int)ft_strlen(data->cub->map->map_copy[x]) \
-	|| data->cub->map->map_copy[x][y] == '1' \
-	|| data->cub->map->map_copy[x][y] == 'X')
+	|| y >= (int)ft_strlen(data->cub->map->map_copy[y]) \
+	|| data->cub->map->map_copy[y][x] == '1' \
+	|| data->cub->map->map_copy[y][x] == 'X')
 		return ;
 	if ((x == 0 || y == 0 || x == height - 1 \
-	|| y == (int)ft_strlen(data->cub->map->map_copy[x]) - 1) \
-	&& (data->cub->map->map_copy[x][y] == '0' \
-	|| data->cub->map->map_copy[x][y] == ' '))
+	|| y == (int)ft_strlen(data->cub->map->map_copy[y]) - 1) \
+	&& (data->cub->map->map_copy[y][x] == '0' \
+	|| data->cub->map->map_copy[y][x] == ' '))
 		return (close_all(data, "Map not close"));
-	data->cub->map->map_copy[x][y] = 'X';
+	data->cub->map->map_copy[y][x] = 'X';
 	flood_fill(data, x - 1, y, height);
 	flood_fill(data, x + 1, y, height);
 	flood_fill(data, x, y - 1, height);
@@ -49,8 +49,8 @@ void	ft_player_position(char **m, t_data *data, char p)
 		{
 			if (m[i][j] == p)
 			{
-				data->player->x = i;
-				data->player->y = j;
+				data->player->x = j;
+				data->player->y = i;
 				return ;
 			}
 			j++;
