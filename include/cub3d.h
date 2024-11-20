@@ -3,10 +3,20 @@
 # include "../export/ultimatelib.h"
 # include <math.h>
 
+# define FOV 66
+# define PI 3.14159265358979323846
+
+typedef struct s_vec
+{
+	double	x;
+	double	y;
+}	t_vec;
+
 typedef struct	s_look
 {
-	double	dirX;
-	double	dirY;
+	t_vec	*pos;
+	t_vec	*dir;
+	t_vec	*add;
 }	t_look;
 
 typedef enum e_orientation
