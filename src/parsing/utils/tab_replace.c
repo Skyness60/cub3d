@@ -6,11 +6,11 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 10:32:34 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 13:42:16 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 15:29:58 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d.h"
 
 static int	calculate_new_length(const char *line)
 {

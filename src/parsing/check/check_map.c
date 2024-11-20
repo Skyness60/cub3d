@@ -6,11 +6,11 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:12:32 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 13:44:17 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:02:47 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d.h"
 
 static int	check_line(char **line, t_data *data)
 {

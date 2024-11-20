@@ -6,11 +6,11 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:00:51 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 16:41:59 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/20 15:29:58 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d.h"
 
 char	*ft_hexa_to_str_utils(char *result, int len, unsigned int nbr)
 {

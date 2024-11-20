@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_name.c                                       :+:      :+:    :+:   */
+/*   handle_close.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 07:04:01 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/19 07:35:23 by sperron          ###   ########.fr       */
+/*   Created: 2024/11/20 15:53:59 by sperron           #+#    #+#             */
+/*   Updated: 2024/11/20 15:58:23 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d.h"
 
-int	check_name(char *av)
+int	handle_close(t_data *data)
 {
-	int	len;
-
-	len = ft_strlen(av);
-	if (len < 4)
-		return (1);
-	if (ft_strncmp(av + len - 4, ".cub", 4))
-		return (1);
+	ft_dprintf(1, "Cub3D closed\n");
+	if (data->mlx->win != NULL)
+		mlx_destroy_window(data->mlx->mlx, data->mlx->win);
+	if (data->mlx != NULL)
+		mlx_destroy_display(data->mlx->mlx);
+	clear_all(data);
+	exit(0);
 	return (0);
 }
 
-int	check_xpm(char *av)
+int	handle_close_keypress(int keycode, t_data *data)
 {
-	int	len;
-
-	len = ft_strlen(av);
-	if (len < 4)
-		return (1);
-	if (ft_strncmp(av + len - 4, ".xpm", 4))
-		return (1);
+	if (keycode == 65307)
+		handle_close(data);
 	return (0);
 }
