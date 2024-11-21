@@ -6,11 +6,24 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:25:35 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 15:29:58 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/21 08:13:46 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	check_file(t_data *data, t_texture *texture)
+{
+	int		fd;
+	char	buff;
+
+	fd = open(texture->path, O_RDONLY);
+	if (fd < 0)
+		return (close_all(data, "Texture file not found"));
+	add_fd(data->trash_fds, fd);
+	if (read(fd, &buff, 1) < 0)
+		return (close_all(data, "Texture not readable"));
+}
 
 void	check_orientation(t_data *data, char **tab, int i)
 {
@@ -33,6 +46,7 @@ void	check_orientation(t_data *data, char **tab, int i)
 		if (!texture->path)
 			return (close_all(data, "Malloc error"));
 		add_ptr(data->trash_ptr, texture->path);
+		check_file(data, texture);
 	}
 }
 

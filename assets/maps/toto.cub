@@ -1,7 +1,7 @@
-NO ./path_to_the_north_texture.xpm
-SO ./path_to_the_south_texture.xpm
-WE ./path_to_the_west_texture.xpm
-EA ./path_to_the_east_texture.xpm
+NO ./assets/textures/brick.xpm
+SO ./assets/textures/stone.xpm
+WE ./assets/textures/metal.xpm
+EA ./assets/textures/wood.xpm
 
 F   0,     0,  255
 
