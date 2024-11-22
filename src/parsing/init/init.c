@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:03:37 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 15:29:58 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/22 16:27:19 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ void	init_data(t_data *data)
 	data->mlx->win = NULL;
 	data->player->orientation = '\0';
 	data->player->nb = 0;
+	data->player->speed = 0.2;
 	data->spawn = 1;
 }

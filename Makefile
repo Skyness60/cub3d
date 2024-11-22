@@ -29,8 +29,13 @@ SRC = 		src/cub3d.c \
 			src/parsing/cub/cub_map_utils.c \
 			src/parsing/algo/flood_fill.c \
 			src/parsing/utils/tab_replace.c \
-			src/game/open_cub3d.c \
-			src/game/mlx/handle/handle_close.c \
+			src/game/open/open_cub3d.c \
+			src/game/handle/handle_close.c \
+			src/game/handle/handle_move.c \
+			src/game/handle/handle_move_utils.c \
+			src/game/tmp/handle_move_debug.c \
+			src/game/game_cub3d.c \
+			src/raycasting/raycasting.c \
 
 MLX_PATH = ./mlx/
 

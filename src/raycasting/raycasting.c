@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:30:48 by jlebard           #+#    #+#             */
-/*   Updated: 2024/11/20 16:18:38 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/22 16:39:02 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void	display_ray(t_data *data, t_player *player, double angle)
 
 	delta_x = CELL_SIZE / fabs(cos(angle));
 	delta_y = CELL_SIZE / fabs(sin(angle));
+	(void)data;
+	(void)player;
 }
 
 static void	send_rays(t_data *data)
