@@ -9,6 +9,7 @@
 # define WIN_HEIGHT 1080
 # define WIN_WIDTH 1920
 # define CELL_SIZE 16
+# define PROJ_PLANE_DT WIN_WIDTH / 2 * 0.57735026919
 
 
 typedef enum e_orientation
@@ -50,13 +51,28 @@ typedef struct s_cub
 	int						height;
 }				t_cub;
 
+typedef	struct	s_data t_data;
+
+typedef struct	s_raycasting
+{
+	t_data	*data;
+	int		step_x;
+	int		step_y;
+	int		count_delta_x;
+	int		count_delta_y;
+	double	to_next_cell_x;
+	double	to_next_cell_y;
+	double	dt_to_1st_cell_x;
+	double	dt_to_1st_cell_y;
+}	t_raycasting;
+
 typedef struct s_player
 {
 	double 		angle;
 	int			nb;
 	char		orientation;
-	int			x;
-	int			y;
+	double		x;
+	double		y;
 }				t_player;
 
 typedef struct	s_mlx
@@ -72,6 +88,7 @@ typedef struct	s_data
 	t_mlx					*mlx;
 	t_garb_c				*trash_ptr;
 	t_garb_d				*trash_fds;
+	t_raycasting			*raycasting;
 	bool					spawn;
 }				t_data;
 
@@ -100,7 +117,7 @@ bool	check_empty_line(t_data *data);
 int		verify_win(t_data *data);
 
 // raycasting
-void	raycasting(t_data *data);
+void	raycast(t_data *data);
 
 // game
 void	open_cub3d(t_data *data);

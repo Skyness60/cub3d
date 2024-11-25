@@ -31,6 +31,8 @@ SRC = 		src/cub3d.c \
 			src/parsing/utils/tab_replace.c \
 			src/game/open_cub3d.c \
 			src/game/mlx/handle/handle_close.c \
+			src/raycasting/raycasting.c \
+			src/raycasting/utils.c \
 
 MLX_PATH = ./mlx/
 
