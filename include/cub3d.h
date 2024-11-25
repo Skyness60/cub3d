@@ -3,6 +3,7 @@
 # include "../export/ultimatelib.h"
 # include "../mlx/mlx.h"
 # include <math.h>
+# include <X11/keysym.h>
 
 # define PI 3.14159265358979323846
 # define FOV PI / 3
@@ -73,6 +74,7 @@ typedef struct s_player
 	char		orientation;
 	double		x;
 	double		y;
+	double		speed;
 }				t_player;
 
 typedef struct	s_mlx
@@ -121,10 +123,14 @@ void	raycast(t_data *data);
 
 // game
 void	open_cub3d(t_data *data);
-
+int		cub3d(t_data *data);
 // mlx
-int		handle_close(t_data *data);
-int		handle_close_keypress(int keycode, t_data *data);
+void	handle_close(t_data *data);
+int		handle_move_keypress(int keycode, t_data *data);
+void	handle_move(t_data *data);
+
 // TEMPORAIRE 
 void	debug_map(t_data *data);
+void	handle_debug_move(t_data *data);
+void	print_map_with_player(t_data *data);
 #endif // !CUB3D_H

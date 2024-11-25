@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:15:17 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 16:19:06 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/22 16:35:19 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	open_cub3d(t_data *data)
 	WIN_HEIGHT, "Cub3D");
 	if (!data->mlx->win)
 		close_all(data, "MLX New window error");
-	mlx_hook(data->mlx->win, 17, 0, handle_close, data);
-	mlx_key_hook(data->mlx->win, handle_close_keypress, data);
+	cub3d(data);
 	mlx_loop(data->mlx->mlx);
 }
