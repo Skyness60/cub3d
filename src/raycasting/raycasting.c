@@ -6,54 +6,47 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:30:48 by jlebard           #+#    #+#             */
-/*   Updated: 2024/11/25 09:01:14 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/11/25 13:55:41 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	display_cells_bis(double delta, bool x, char **map, 
-								t_raycasting *raycasting)
+static void	display_cells_bis(double distance, bool x, t_raycasting *raycasting)
 {
 	double	projection_height;
-	double	distance;
-	int		sprite_top;
-	int		sprite_bottom;
 	int		i;
 
 	i = -1;
-	if (x)
-		distance = raycasting->count_delta_x * delta;
-	else
-		distance = raycasting->count_delta_y * delta;
-	projection_height = PROJ_PLANE_DT * CELL_SIZE / distance;
-	sprite_top = (WIN_HEIGHT / 2) - (projection_height / 2);
-	sprite_bottom = (WIN_HEIGHT / 2) + (projection_height / 2);
-	if (sprite_top < 0)
-		sprite_top = 0;
-	if (sprite_bottom > WIN_HEIGHT)
-		sprite_bottom = WIN_HEIGHT;
-	//afficher les spites;
+	projection_height = PROJ_PLANE_DT / distance;
+	if (raycasting->visited[(int)raycasting->y][(int)raycasting->x] == 1)
+		return ;
+	raycasting->visited[(int)raycasting->y][(int)raycasting->x] = 1;
+	display_texture(raycasting, x, projection_height);
 }
 
 static void	display_cells(t_raycasting *raycasting, double delta_x,
 						double delta_y,	t_map *map)
 {	
+	raycasting->to_next_cell_x = ((int)raycasting->x - raycasting->x) / delta_x;
+	raycasting->to_next_cell_y = ((int)raycasting->y - raycasting->y) / delta_y;
 	while (1)
 	{
-		if (raycasting->step_x > raycasting->step_y)
+		if (raycasting->to_next_cell_x < raycasting->to_next_cell_y)
 		{
-			raycasting->to_next_cell_x += raycasting->step_x;
-			display_cells_bis(delta_x, 1, map->map_copy, raycasting);
-			if (map->map_copy[raycasting->step_y][raycasting->step_x] == '1')
-				break ;					
+			raycasting->x += raycasting->step_x;
+			raycasting->to_next_cell_x = raycasting->to_next_cell_x + delta_x;
+			if (map->map_copy[(int)raycasting->y][(int)raycasting->x] == '1')
+				return (display_cells_bis(delta_x, 1, raycasting), \
+				NULL);
 		}
 		else
 		{
-			raycasting->to_next_cell_y += raycasting->step_y;
-			display_cells_bis(delta_y, 0, map->map_copy, raycasting);
-			if (map->map_copy[raycasting->step_y][raycasting->step_x] == '1')
-				break ;			
+			raycasting->y += raycasting->step_y;
+			raycasting->to_next_cell_y = raycasting->to_next_cell_y + delta_y;
+			if (map->map_copy[(int)raycasting->y][(int)raycasting->x] == '1')
+				return (display_cells_bis(delta_y, 0, raycasting), \
+				NULL);
 		}
 	}	
 }
@@ -63,20 +56,18 @@ static void	send_rays(t_data *data, t_player *player, double ray_angle)
 	double	delta_x;
 	double	delta_y;
 
-	delta_x = CELL_SIZE / fabs(cos(ray_angle));
-	delta_y = CELL_SIZE / fabs(sin(ray_angle));
+	delta_x = 1 / fabs(cos(ray_angle));
+	delta_y = 1 / fabs(sin(ray_angle));
 	if (cos(ray_angle) > 0)
 		data->raycasting->step_x = 1;
 	else
-		data->raycasting->step_x = 1;
+		data->raycasting->step_x = -1;
 	if (sin(ray_angle) > 0)
 		data->raycasting->step_y = 1;
 	else
 		data->raycasting->step_y = -1;
 	data->raycasting->to_next_cell_x = player->x;
 	data->raycasting->to_next_cell_y = player->y;
-	data->raycasting->dt_to_1st_cell_x = player->x - (int)player->x;
-	data->raycasting->dt_to_1st_cell_y = player->y - (int)player->y;
 	display_cells(data->raycasting, delta_x, delta_y, data->cub->map->map_copy);
 }
 
@@ -84,23 +75,23 @@ static void	raycast_bis(t_data *data)
 {
 	double	ray_angle;
 	double	cam_angle;
-	int		i;
-
-	i = 0;
+	
+	
 	cam_angle = data->player->angle;
-	while (i < WIN_WIDTH)
+	while (data->raycasting->count_ray++ < WIN_WIDTH)
 	{
-		ray_angle = cam_angle - (FOV / 2) + (i * FOV / WIN_WIDTH);
+		ray_angle = cam_angle - (FOV / 2) + \
+		(data->raycasting->count_ray * FOV / WIN_WIDTH);
 		send_rays(data, data->player, ray_angle);
-		i++;
 	}
 }
 
 void	raycast(t_data *data)
 {
-	data->raycasting->count_delta_x = 0;
-	data->raycasting->count_delta_y = 0;
+	init_visited(data->raycasting, data->cub->map->map_copy);
 	data->raycasting->data = data;
+	data->raycasting->count_ray = -1;
+	data->raycasting->angle = data->player->angle;
 	if (data->spawn == 1)
 	{
 		{

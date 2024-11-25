@@ -9,7 +9,6 @@
 # define FOV PI / 3
 # define WIN_HEIGHT 1080
 # define WIN_WIDTH 1920
-# define CELL_SIZE 16
 # define PROJ_PLANE_DT WIN_WIDTH / 2 * 0.57735026919
 
 
@@ -57,14 +56,15 @@ typedef	struct	s_data t_data;
 typedef struct	s_raycasting
 {
 	t_data	*data;
+	bool	**visited;
 	int		step_x;
 	int		step_y;
-	int		count_delta_x;
-	int		count_delta_y;
+	int		count_ray;
+	double	x;
+	double	y;
 	double	to_next_cell_x;
 	double	to_next_cell_y;
-	double	dt_to_1st_cell_x;
-	double	dt_to_1st_cell_y;
+	double	angle;
 }	t_raycasting;
 
 typedef struct s_player
@@ -120,6 +120,8 @@ int		verify_win(t_data *data);
 
 // raycasting
 void	raycast(t_data *data);
+void	init_visited(t_raycasting *raycasting, char **map);
+void	display_texture(t_raycasting *raycasting, bool x, double taille);
 
 // game
 void	open_cub3d(t_data *data);
