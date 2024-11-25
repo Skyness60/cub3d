@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:20:58 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/22 17:28:40 by sperron          ###   ########.fr       */
+/*   Updated: 2024/11/25 13:22:06 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,11 @@ int	handle_move_keypress(int keycode, t_data *data)
 		data->player->angle -= 0.1;
 	else if (keycode == XK_Right)
 		data->player->angle += 0.1;
+	data->player->angle = fmod(data->player->angle, 2 * PI);
+	if (data->player->angle < 0)
+		data->player->angle += 2 * PI;
 	handle_debug_move(data);
 	print_map_with_player(data);
 	return (0);
 }
+
