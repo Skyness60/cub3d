@@ -36,6 +36,7 @@ SRC = 		src/cub3d.c \
 			src/game/tmp/handle_move_debug.c \
 			src/game/game_cub3d.c \
 			src/raycasting/raycasting.c \
+			src/raycasting/raycasting_utils.c
 
 MLX_PATH = ./mlx/
 

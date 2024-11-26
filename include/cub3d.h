@@ -75,6 +75,7 @@ typedef struct s_player
 	double		x;
 	double		y;
 	double		speed;
+	bool	spawn;
 }				t_player;
 
 typedef struct	s_mlx
@@ -89,9 +90,9 @@ typedef struct	s_data
 	t_player				*player;
 	t_mlx					*mlx;
 	t_garb_c				*trash_ptr;
+	t_garb_c				*raycast_trash;
 	t_garb_d				*trash_fds;
 	t_raycasting			*raycasting;
-	bool					spawn;
 }				t_data;
 
 // utils
@@ -119,7 +120,7 @@ bool	check_empty_line(t_data *data);
 int		verify_win(t_data *data);
 
 // raycasting
-void	raycast(t_data *data);
+int		raycast(t_data *data);
 void	init_visited(t_raycasting *raycasting, char **map);
 void	display_texture(t_raycasting *raycasting, bool x, double taille);
 

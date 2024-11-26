@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:30:48 by jlebard           #+#    #+#             */
-/*   Updated: 2024/11/25 13:55:41 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/11/26 14:18:15 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	display_cells_bis(double distance, bool x, t_raycasting *raycasting)
 	display_texture(raycasting, x, projection_height);
 }
 
-static void	display_cells(t_raycasting *raycasting, double delta_x,
+static void	*display_cells(t_raycasting *raycasting, double delta_x,
 						double delta_y,	t_map *map)
 {	
 	raycasting->to_next_cell_x = ((int)raycasting->x - raycasting->x) / delta_x;
@@ -35,18 +35,18 @@ static void	display_cells(t_raycasting *raycasting, double delta_x,
 		if (raycasting->to_next_cell_x < raycasting->to_next_cell_y)
 		{
 			raycasting->x += raycasting->step_x;
-			raycasting->to_next_cell_x = raycasting->to_next_cell_x + delta_x;
+			raycasting->to_next_cell_x += delta_x;
 			if (map->map_copy[(int)raycasting->y][(int)raycasting->x] == '1')
-				return (display_cells_bis(delta_x, 1, raycasting), \
-				NULL);
+				return (display_cells_bis(raycasting->to_next_cell_x, \
+				1, raycasting),	NULL);
 		}
 		else
 		{
-			raycasting->y += raycasting->step_y;
-			raycasting->to_next_cell_y = raycasting->to_next_cell_y + delta_y;
+			raycasting->y += raycasting->step_y;	
+			raycasting->to_next_cell_y += delta_y;
 			if (map->map_copy[(int)raycasting->y][(int)raycasting->x] == '1')
-				return (display_cells_bis(delta_y, 0, raycasting), \
-				NULL);
+				return (display_cells_bis(raycasting->to_next_cell_y, \
+				0, raycasting),	NULL);
 		}
 	}	
 }
@@ -68,7 +68,7 @@ static void	send_rays(t_data *data, t_player *player, double ray_angle)
 		data->raycasting->step_y = -1;
 	data->raycasting->to_next_cell_x = player->x;
 	data->raycasting->to_next_cell_y = player->y;
-	display_cells(data->raycasting, delta_x, delta_y, data->cub->map->map_copy);
+	display_cells(data->raycasting, delta_x, delta_y, data->cub->map);
 }
 
 static void	raycast_bis(t_data *data)
@@ -80,19 +80,22 @@ static void	raycast_bis(t_data *data)
 	cam_angle = data->player->angle;
 	while (data->raycasting->count_ray++ < WIN_WIDTH)
 	{
+		data->raycasting->x = data->player->x;
+		data->raycasting->y = data->player->y;
 		ray_angle = cam_angle - (FOV / 2) + \
 		(data->raycasting->count_ray * FOV / WIN_WIDTH);
 		send_rays(data, data->player, ray_angle);
 	}
 }
 
-void	raycast(t_data *data)
+int	raycast(t_data *data)
 {
-	init_visited(data->raycasting, data->cub->map->map_copy);
+	data->raycast_trash = malloc(sizeof(t_garb_c));
+	init_garbage_collector(data->raycast_trash);
 	data->raycasting->data = data;
+	init_visited(data->raycasting, data->cub->map->map_copy);
 	data->raycasting->count_ray = -1;
-	data->raycasting->angle = data->player->angle;
-	if (data->spawn == 1)
+	if (data->player->spawn == 1)
 	{
 		{
 			if (data->player->orientation == 'N')
@@ -103,8 +106,12 @@ void	raycast(t_data *data)
 				data->player->angle = PI;
 			else if (data->player->orientation == 'S')
 				data->player->angle = 3 * PI / 2;
-			data->spawn = 0;
+			data->player->spawn = 0;
 		}
 	}
+	data->raycasting->angle = data->player->angle;
 	raycast_bis(data);
+	free_all(data->raycast_trash);
+	free(data->raycast_trash);
+	return (0);
 }

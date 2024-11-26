@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:03:37 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/25 09:08:45 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/11/26 10:51:21 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ void	init_data(t_data *data)
 	data->player->orientation = '\0';
 	data->player->nb = 0;
 	data->player->speed = 0.2;
-	data->spawn = 1;
+	data->player->spawn = 1;
 }
