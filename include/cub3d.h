@@ -51,22 +51,6 @@ typedef struct s_cub
 	int						height;
 }				t_cub;
 
-typedef	struct	s_data t_data;
-
-typedef struct	s_raycasting
-{
-	t_data	*data;
-	bool	**visited;
-	int		step_x;
-	int		step_y;
-	int		count_ray;
-	double	x;
-	double	y;
-	double	to_next_cell_x;
-	double	to_next_cell_y;
-	double	angle;
-}	t_raycasting;
-
 typedef struct s_player
 {
 	double 		angle;
@@ -75,7 +59,6 @@ typedef struct s_player
 	double		x;
 	double		y;
 	double		speed;
-	bool	spawn;
 }				t_player;
 
 typedef struct	s_mlx
@@ -83,6 +66,29 @@ typedef struct	s_mlx
 	void	*mlx;
 	void	*win;
 }				t_mlx;
+
+typedef struct s_data t_data;
+
+typedef struct	raycast
+{
+	double		angle;
+	double		delta_x;
+	double		delta_y;
+	double		len_x;
+	double		len_y;
+	double		pos_x;
+	double		pos_y;
+	double		impact_x;
+	double		impact_y;
+	double		size_displayed;
+	int			wall_x;
+	int			wall_y;
+	int			dir_x;
+	int			dir_y;
+	int			low;
+	char		**map;
+	t_data		*data;
+}	t_raycast;
 
 typedef struct	s_data
 {
@@ -92,7 +98,7 @@ typedef struct	s_data
 	t_garb_c				*trash_ptr;
 	t_garb_c				*raycast_trash;
 	t_garb_d				*trash_fds;
-	t_raycasting			*raycasting;
+	t_raycast				*raycast;
 }				t_data;
 
 // utils
@@ -120,13 +126,12 @@ bool	check_empty_line(t_data *data);
 int		verify_win(t_data *data);
 
 // raycasting
-int		raycast(t_data *data);
-void	init_visited(t_raycasting *raycasting, char **map);
-void	display_texture(t_raycasting *raycasting, bool x, double taille);
+void	raycasting(t_data *data, t_player *player);
+void	display_walls(t_raycast *raycast, bool x, int count_r);
 
 // game
 void	open_cub3d(t_data *data);
-int		cub3d(t_data *data);
+int		cub3d(t_data *data, t_player *player);
 // mlx
 void	handle_close(t_data *data);
 int		handle_move_keypress(int keycode, t_data *data);

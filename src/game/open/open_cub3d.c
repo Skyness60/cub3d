@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:15:17 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/26 14:17:39 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/11/27 09:12:55 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void	open_cub3d(t_data *data)
 	&data->cub->texture[WEST].height);
 	if (!data->mlx->win)
 		close_all(data, "MLX New window error");
-	cub3d(data);
+	cub3d(data, data->player);
 }
