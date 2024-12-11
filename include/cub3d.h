@@ -27,6 +27,10 @@ typedef struct	s_texture
 	int		*data;
 	int		width;
 	int		height;
+	int		*buffer;
+	int		bpp;
+	int		sizeline;
+	int		endian;
 }				t_texture;
 
 typedef struct	s_map
@@ -78,8 +82,7 @@ typedef struct	raycast
 	double		len_y;
 	double		pos_x;
 	double		pos_y;
-	double		impact_x;
-	double		impact_y;
+	double		precise_impact;
 	double		size_displayed;
 	int			wall_x;
 	int			wall_y;
@@ -88,6 +91,9 @@ typedef struct	raycast
 	int			low;
 	char		**map;
 	t_data		*data;
+	void		*final_img;
+	int			*fin_buf;
+	bool		debug;
 }	t_raycast;
 
 typedef struct	s_data
@@ -128,6 +134,7 @@ int		verify_win(t_data *data);
 // raycasting
 void	raycasting(t_data *data, t_player *player);
 void	display_walls(t_raycast *raycast, bool x, int count_r);
+void	init_final_img(t_raycast *raycast);
 
 // game
 void	open_cub3d(t_data *data);

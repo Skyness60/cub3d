@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:30:48 by jlebard           #+#    #+#             */
-/*   Updated: 2024/11/27 14:26:42 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/11 11:40:12 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,11 @@ void	raycasting(t_data *data, t_player *player)
 	int			i;
 	
 	i = -1;
+	raycast.debug = 0;
 	raycast.data = data;
 	raycast.angle = correct_angle(player->angle + PI / 6);
 	raycast.map = data->cub->map->map_copy;
+	init_final_img(&raycast);
 	while (++i < WIN_WIDTH)
 	{
 		raycast.pos_x = player->x;
@@ -107,4 +109,6 @@ void	raycasting(t_data *data, t_player *player)
 		else
 			display_walls(&raycast, 0, i);
 	}
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
+	raycast.final_img, 0, 0);
 }

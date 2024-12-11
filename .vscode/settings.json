@@ -3,6 +3,8 @@
 		"cub3d.h": "c",
 		"garbage_descriptor.h": "c",
 		"ultimatelib.h": "c",
-		"garbage_collector.h": "c"
+		"garbage_collector.h": "c",
+		"mlx.h": "c",
+		"keysym.h": "c"
 	}
 }

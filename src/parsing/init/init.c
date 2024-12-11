@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:03:37 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/26 10:51:21 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/10 11:15:16 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,11 @@ void	init_data(t_data *data)
 	allocate_memory((void **)&data->mlx, sizeof(t_mlx), \
 	"Malloc error for t_cub", data);
 	add_ptr(data->trash_ptr, data->mlx);
-	allocate_memory((void **)&data->raycasting, sizeof(t_raycasting), \
+	allocate_memory((void **)&data->raycast, sizeof(t_raycast), \
 	"Malloc error for t_raycasting", data);
 	data->mlx->mlx = NULL;
 	data->mlx->win = NULL;
 	data->player->orientation = '\0';
 	data->player->nb = 0;
 	data->player->speed = 0.2;
-	data->player->spawn = 1;
 }
