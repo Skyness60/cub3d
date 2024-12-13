@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:20:08 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/11 12:28:50 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/13 11:40:09 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ static void	get_final_img(t_raycast *raycast, t_texture texture, double len,
 	int		i;
 
 	i = -1;	
-	size_img = texture.height * PROJ_PLANE_DT / len;
+	size_img = PROJ_PLANE_DT / len;
 	if (size_img > WIN_HEIGHT)
 		size_img = WIN_HEIGHT;
-	ratio = texture.height / size_img;
-	if (count_r == 500)
+	ratio = (double)texture.height / (double)size_img;
+	if (count_r == INT_MAX)
 	{
 		printf("proj plane dt = %f\n", PROJ_PLANE_DT);
 		printf("taille de l image de base = %d\n", texture.height);
@@ -78,20 +78,40 @@ void	init_final_img(t_raycast *raycast)
 	&sizeline, &endian);
 }
 
-static void	define_precise_impact(t_raycast *raycast, bool x)
+static void	define_precise_impact(t_raycast *raycast, bool x, int count_r)
 {
 	if (x)
 	{
-		raycast->precise_impact = raycast->pos_x + \
-		(raycast->len_x * cos(raycast->angle));
-		raycast->precise_impact = (double)raycast->wall_y;
+		if (count_r == 150)
+		{
+			printf("pos_x : %f\n", raycast->pos_x);
+			printf("len_x : %f\n", raycast->len_x);
+			printf("cos : %f\n", cos(raycast->angle));
+		}
+		raycast->precise_impact = raycast->data->player->x + \
+		raycast->len_x * cos(raycast->angle);
+		if (count_r == 150)
+			printf("position exacte du point de collision y : %f\n", raycast->precise_impact);
+		// raycast->precise_impact -= (int)raycast->precise_impact;
+		raycast->precise_impact = fmod(raycast->precise_impact, 1.0);
 	}
 	else
 	{
-		raycast->precise_impact = raycast->pos_y + \
-		(raycast->len_y * sin(raycast->angle));
-		raycast->precise_impact = (double)raycast->wall_x;
+		if (count_r == 150)
+		{
+			printf("pos_y : %f\n", raycast->pos_y);
+			printf("len_y : %f\n", raycast->len_y);
+			printf("sin : %f\n", sin(raycast->angle));
+		}
+		raycast->precise_impact = raycast->data->player->y + \
+		raycast->len_y * sin(raycast->angle);
+		if (count_r == 150)
+			printf("position exacte du point de collision y : %f\n", raycast->precise_impact);
+		// raycast->precise_impact -= (int)raycast->precise_impact;
+		raycast->precise_impact = fmod(raycast->precise_impact, 1.0);
 	}
+	if (count_r == 150)
+		printf("valeur du float a la sortie de la fct : %f\n", raycast->precise_impact);
 }
 
 void	display_walls(t_raycast *raycast, bool x, int count_r)
@@ -99,7 +119,7 @@ void	display_walls(t_raycast *raycast, bool x, int count_r)
 	t_texture	*imgs;
 	
 	imgs = raycast->data->cub->texture;
-	define_precise_impact(raycast, x);
+	define_precise_impact(raycast, x, count_r);
 	if (x)
 	{
 		if (raycast->dir_x == 1)

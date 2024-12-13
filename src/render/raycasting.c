@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:30:48 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/11 11:40:12 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/13 10:17:41 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,5 @@ void	raycasting(t_data *data, t_player *player)
 	}
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
 	raycast.final_img, 0, 0);
+	mlx_destroy_image(data->mlx->mlx, raycast.final_img);
 }
