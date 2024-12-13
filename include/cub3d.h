@@ -76,24 +76,21 @@ typedef struct s_data t_data;
 typedef struct	raycast
 {
 	double		angle;
+	double		count_r;
 	double		delta_x;
 	double		delta_y;
 	double		len_x;
 	double		len_y;
-	double		pos_x;
-	double		pos_y;
-	double		precise_impact;
-	double		size_displayed;
-	int			wall_x;
-	int			wall_y;
-	int			dir_x;
-	int			dir_y;
-	int			low;
-	char		**map;
+	int			pos_x;
+	int			pos_y;
+	int			step_x;
+	int			step_y;
+	bool		x;
+	double		precise_hit;
+	void		*new_img;
+	int			*new_buff;
 	t_data		*data;
-	void		*final_img;
-	int			*fin_buf;
-	bool		debug;
+	t_player	*player;
 }	t_raycast;
 
 typedef struct	s_data
@@ -131,10 +128,9 @@ int		check_map(t_data *data);
 bool	check_empty_line(t_data *data);
 int		verify_win(t_data *data);
 
-// raycasting
+// raycasting & render
 void	raycasting(t_data *data, t_player *player);
-void	display_walls(t_raycast *raycast, bool x, int count_r);
-void	init_final_img(t_raycast *raycast);
+void	construct_img(t_data *data, t_raycast *raycast);
 
 // game
 void	open_cub3d(t_data *data);

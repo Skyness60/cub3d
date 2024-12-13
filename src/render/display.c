@@ -5,133 +5,82 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 11:20:08 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/13 11:40:09 by jlebard          ###   ########.fr       */
+/*   Created: 2024/12/13 15:14:59 by jlebard           #+#    #+#             */
+/*   Updated: 2024/12/13 16:33:47 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-static void	fill_buff(t_raycast *raycast, int color, int i, int count_r)
+static void	ceiling_and_top(t_raycast *raycast, int size_img)
 {
-	(void)color;
-	if (i < WIN_HEIGHT / 2)
+	int	i;
+
+	i = WIN_HEIGHT / 2 - size_img / 2 + 1;
+	while (--i > 0)
+		raycast->new_buff[(int)(i * WIN_WIDTH + raycast->count_r)] = 0;
+	i = WIN_HEIGHT / 2 + size_img / 2 - 1;
+	while (++i < WIN_HEIGHT)
+		raycast->new_buff[(int)(i * WIN_WIDTH + raycast->count_r)] = 0;
+}
+
+static void	fill_column_bis(t_raycast *raycast, t_texture texture, \
+								int size_img, int ratio)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = -1;
+	j = -1;
+	k = WIN_HEIGHT / 2 - size_img - 1; 
+	while (++i < texture.height)
 	{
-		while (i >= 0)
-		{
-			raycast->fin_buf[i + count_r] = 0;
-			i--;
-		}
-	}
-	else
-	{
-		while (i < WIN_HEIGHT)
-		{
-			raycast->fin_buf[i + count_r] = 0;
-			i++;
-		}	
+		while (++j < ratio)
+			raycast->new_buff[(int)(++k * WIN_WIDTH + raycast->count_r)] = \
+			texture.buffer[(int)(i * texture.width + texture.width * \
+			raycast->precise_hit)];
+		j = -1;
 	}
 }
 
-static void	get_final_img(t_raycast *raycast, t_texture texture, double len,
-							int count_r)
+static void	fill_column(t_raycast *raycast, t_texture texture)
 {
-	double	ratio;
-	int		size_img;
+	double	len;
+	int		col_size;
 	int		i;
-
-	i = -1;	
-	size_img = PROJ_PLANE_DT / len;
-	if (size_img > WIN_HEIGHT)
-		size_img = WIN_HEIGHT;
-	ratio = (double)texture.height / (double)size_img;
-	if (count_r == INT_MAX)
-	{
-		printf("proj plane dt = %f\n", PROJ_PLANE_DT);
-		printf("taille de l image de base = %d\n", texture.height);
-		printf("distance perso mur = %f\n", len);
-		printf("taille rayon mur pixels = %d\n", size_img);
-		printf("ratio (proportion en pixels du rayon que l on affiche par rapport a la taille en pixels de l image de base) = %f\n", ratio);
-		printf("float de l impact sur le mur = %f\n", raycast->precise_impact);
-	}
-	while (++i < size_img)
-	{
-		raycast->fin_buf[(WIN_WIDTH / 2 - size_img / 2 + i) + count_r] = \
-		texture.buffer[(int)(i * ratio + raycast->precise_impact * \
-		texture.height)];
-	}
-	i = WIN_HEIGHT / 2 - size_img / 2;
-	fill_buff(raycast, raycast->data->cub->hex_floor, i, count_r);
-	i = WIN_HEIGHT / 2 + size_img / 2;
-	fill_buff(raycast, raycast->data->cub->hex_ceiling, i, count_r);
+	int		ratio;
+	
+	i = -1;
+	if (raycast->x == 1)
+		len = raycast->len_x;
+	else
+		len = raycast->len_y;
+	col_size = PROJ_PLANE_DT / (len / 2);
+	if (col_size > WIN_HEIGHT)
+		col_size = WIN_HEIGHT;
+	ratio = col_size / texture.height;
+	while (++i < col_size)
+		fill_column_bis(raycast, texture, col_size, ratio);
+	ceiling_and_top(raycast, col_size);
 }
 
-void	init_final_img(t_raycast *raycast)
+void	construct_img(t_data *data, t_raycast *raycast)
 {
 	int	bpp;
 	int	sizeline;
 	int	endian;
-
-	raycast->final_img = mlx_new_image(raycast->data->mlx->mlx, WIN_WIDTH, \
-	WIN_HEIGHT);
-	raycast->fin_buf = (int*)mlx_get_data_addr(raycast->final_img, &bpp, \
-	&sizeline, &endian);
-}
-
-static void	define_precise_impact(t_raycast *raycast, bool x, int count_r)
-{
-	if (x)
-	{
-		if (count_r == 150)
-		{
-			printf("pos_x : %f\n", raycast->pos_x);
-			printf("len_x : %f\n", raycast->len_x);
-			printf("cos : %f\n", cos(raycast->angle));
-		}
-		raycast->precise_impact = raycast->data->player->x + \
-		raycast->len_x * cos(raycast->angle);
-		if (count_r == 150)
-			printf("position exacte du point de collision y : %f\n", raycast->precise_impact);
-		// raycast->precise_impact -= (int)raycast->precise_impact;
-		raycast->precise_impact = fmod(raycast->precise_impact, 1.0);
-	}
-	else
-	{
-		if (count_r == 150)
-		{
-			printf("pos_y : %f\n", raycast->pos_y);
-			printf("len_y : %f\n", raycast->len_y);
-			printf("sin : %f\n", sin(raycast->angle));
-		}
-		raycast->precise_impact = raycast->data->player->y + \
-		raycast->len_y * sin(raycast->angle);
-		if (count_r == 150)
-			printf("position exacte du point de collision y : %f\n", raycast->precise_impact);
-		// raycast->precise_impact -= (int)raycast->precise_impact;
-		raycast->precise_impact = fmod(raycast->precise_impact, 1.0);
-	}
-	if (count_r == 150)
-		printf("valeur du float a la sortie de la fct : %f\n", raycast->precise_impact);
-}
-
-void	display_walls(t_raycast *raycast, bool x, int count_r)
-{
-	t_texture	*imgs;
 	
-	imgs = raycast->data->cub->texture;
-	define_precise_impact(raycast, x, count_r);
-	if (x)
-	{
-		if (raycast->dir_x == 1)
-			get_final_img(raycast, imgs[EAST], raycast->len_x, count_r);
-		else
-			get_final_img(raycast, imgs[WEST], raycast->len_x, count_r);
-	}
+	raycast->new_img = mlx_new_image(data->mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
+	raycast->new_buff = (int *)(mlx_get_data_addr(raycast->new_img, &bpp, \
+	&sizeline, &endian));
+	if (raycast->x == 1 && raycast->angle > PI / 2 && \
+	raycast->angle < PI + PI / 2)
+		fill_column(raycast, data->cub->texture[WEST]);
+	else if (raycast->x == 1)
+		fill_column(raycast, data->cub->texture[EAST]);
+	else if (raycast->angle < PI)	
+		fill_column(raycast, data->cub->texture[NORTH]);
 	else
-	{
-		if (raycast->dir_y == 1)
-			get_final_img(raycast, imgs[SOUTH], raycast->len_y, count_r);
-		else
-			get_final_img(raycast, imgs[NORTH], raycast->len_y, count_r);
-	}
+		fill_column(raycast, data->cub->texture[NORTH]);
 }
