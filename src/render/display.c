@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:14:59 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/14 16:57:44 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/14 17:56:00 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,19 @@ static void	fill_column(t_raycast *raycast, t_texture texture)
 		len = raycast->len_x;
 	else
 		len = raycast->len_y;
+	if (raycast->count_r == 100)
+		printf("real len : %f\n", len);
 	if (len < 0.25)
 		len = 0.25;
-	// printf("len = %f\n", len);
 	col_size = WIN_HEIGHT / len;
 	if (col_size > WIN_HEIGHT)
 		col_size = WIN_HEIGHT;
+	if (raycast->count_r == 100)
+	{
+		printf("len = %f\n", len);
+		printf("col_size : %d\n", col_size);
+	}
 	ratio = col_size / texture.height;
-	// printf("col_size : %d\n", col_size
 	while (++i < col_size)
 		fill_column_bis(raycast, texture, col_size, ratio);
 	if (col_size < WIN_HEIGHT)
@@ -80,5 +85,5 @@ void	construct_img(t_data *data, t_raycast *raycast)
 	else if (raycast->angle < PI)	
 		fill_column(raycast, data->cub->texture[NORTH]);
 	else
-		fill_column(raycast, data->cub->texture[NORTH]);
+		fill_column(raycast, data->cub->texture[SOUTH]);
 }
