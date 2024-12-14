@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:46:19 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/14 18:23:36 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/14 19:10:10 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,4 +122,5 @@ void	raycasting(t_data *data, t_player *player)
 	}
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
 	raycast.new_img, 0, 0);
+	mlx_destroy_image(data->mlx->mlx, raycast.new_img);
 }

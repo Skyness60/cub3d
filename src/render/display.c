@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:14:59 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/14 18:21:50 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/14 19:04:39 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,37 @@ static void	ceiling_and_floor(t_raycast *raycast, int size_img)
 		raycast->new_buff[i++ * WIN_WIDTH + raycast->count_r] = raycast->data->cub->hex_floor;
 }
 
+
 static void	fill_column_bis(t_raycast *raycast, t_texture texture, int size_img, int ratio)
 {
 	int	i;
-	int	j;
 	int	k;
 	int	tex_x;
+	int	tex_y;
 
 	i = 0;
+	(void)ratio;
 	k = WIN_HEIGHT / 2 - size_img / 2;
-	while (i < texture.height)
+	if (size_img > WIN_HEIGHT)
+		size_img = WIN_HEIGHT;
+	while (i < size_img)
 	{
-		j = 0;
 		tex_x = (int)(texture.width * raycast->precise_hit);
-		if (tex_x >= texture.width) // Sécuriser l'indice
+		if (tex_x >= texture.width) // Secure the index
 			tex_x = texture.width - 1;
-		while (j < ratio && k < WIN_HEIGHT)
+		tex_y = (i * texture.height) / size_img; // Calculate the corresponding y coordinate in the texture
+		if (tex_y >= texture.height) // Ensure tex_y is within bounds
+			tex_y = texture.height - 1;
+		
+		// Filling the column in the new buffer
+		if (k >= 0 && k < WIN_HEIGHT) // Ensure k is within bounds
 		{
-			raycast->new_buff[k++ * WIN_WIDTH + raycast->count_r] = \
-			texture.buffer[i * texture.width + tex_x];
-			j++;
+			raycast->new_buff[k * WIN_WIDTH + raycast->count_r] = texture.buffer[tex_y * texture.width + tex_x];
 		}
-		i++;
+		k++; // Move down the column
+		i++; // Move to the next pixel in the column
 	}
 }
-
 
 static void	fill_column(t_raycast *raycast, t_texture texture)
 {
@@ -59,12 +65,12 @@ static void	fill_column(t_raycast *raycast, t_texture texture)
 	int		col_size;
 	int		ratio;
 
-	// Calcul de la longueur
+	// Calculate the length
 	len = (raycast->x == 1) ? raycast->len_x : raycast->len_y;
-	if (len < 0.25) // Limite minimale pour éviter des colonnes démesurées
+	if (len < 0.25) // Minimum limit to avoid oversized columns
 		len = 0.25;
 
-	// Taille et ratio des colonnes
+	// Calculate column size and ratio
 	col_size = WIN_HEIGHT / len;
 	if (col_size > WIN_HEIGHT)
 		col_size = WIN_HEIGHT;
@@ -72,14 +78,13 @@ static void	fill_column(t_raycast *raycast, t_texture texture)
 	if (ratio < 1)
 		ratio = 1;
 
-	// Remplissage de la colonne
+	// Fill the column
 	fill_column_bis(raycast, texture, col_size, ratio);
 
-	// Remplissage plafond/sol si la colonne est plus petite que la fenêtre
+	// Fill ceiling/floor if the column is smaller than the window
 	if (col_size < WIN_HEIGHT)
 		ceiling_and_floor(raycast, col_size);
 }
-
 
 void	construct_img(t_data *data, t_raycast *raycast)
 {

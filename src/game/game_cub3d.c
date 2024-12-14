@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:42:09 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/14 18:00:26 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/14 19:14:05 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,21 @@
 
 int	cub3d(t_data *data, t_player *player)
 {
-	char	**map;
-	map = data->cub->map->map_copy;
-
-	printf("position du joueur : %c\n", map[(int)player->y][(int)player->x]);
-	int	i;
-	i = 0;
-	while (map[i])
-	{
-		printf("%s\n", map[i]);
-		i++;
-	}
-	map = data->cub->map->map;	
-	if (map[(int)player->y][(int)player->x] == 'S')
+	if (data->cub->map->map[(int)player->y][(int)player->x] == 'S')
 		player->angle = PI + PI / 2;
-	else if (map[(int)player->y][(int)player->x] == 'N')
+	else if (data->cub->map->map[(int)player->y][(int)player->x] == 'N')
 		player->angle = PI / 2;
-	else if (map[(int)player->y][(int)player->x] == 'W')
+	else if (data->cub->map->map[(int)player->y][(int)player->x] == 'W')
 		player->angle = PI;
-	else if (map[(int)player->y][(int)player->x] == 'E')
+	else if (data->cub->map->map[(int)player->y][(int)player->x] == 'E')
 		player->angle = 2 * PI;
-	// handle_move(data);
-	raycasting(data, data->player);
+
 	// handle_close(data);
 	// mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->cub->texture[NORTH].img, 1800, 900);
+	//handle_move(data);
+	raycasting(data, data->player);
 	mlx_loop(data->mlx->mlx);
 	free_all(data->raycast_trash);
+
 	return (0);
 }
