@@ -3,86 +3,92 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:14:59 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/14 17:56:00 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/14 18:21:50 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-static void	ceiling_and_top(t_raycast *raycast, int size_img)
+static void	ceiling_and_floor(t_raycast *raycast, int size_img)
 {
 	int	i;
 
-	i = WIN_HEIGHT / 2 - size_img / 2 + 1;
-	while (--i > 0)
-		raycast->new_buff[(int)(i * WIN_WIDTH + raycast->count_r)] = 0;
-	i = WIN_HEIGHT / 2 + size_img / 2 - 1;
-	while (++i < WIN_HEIGHT)
-		raycast->new_buff[(int)(i * WIN_WIDTH + raycast->count_r)] = 0;
+	// Fill the ceiling
+	i = WIN_HEIGHT / 2 - size_img / 2;
+	while (i >= 0 && i < WIN_HEIGHT / 2)
+		raycast->new_buff[i-- * WIN_WIDTH + raycast->count_r] = raycast->data->cub->hex_ceiling;
+
+	// Fill the floor
+	i = WIN_HEIGHT / 2 + size_img / 2;
+	while (i >= WIN_HEIGHT / 2 && i < WIN_HEIGHT)
+		raycast->new_buff[i++ * WIN_WIDTH + raycast->count_r] = raycast->data->cub->hex_floor;
 }
 
-static void	fill_column_bis(t_raycast *raycast, t_texture texture, \
-								int size_img, int ratio)
+static void	fill_column_bis(t_raycast *raycast, t_texture texture, int size_img, int ratio)
 {
 	int	i;
 	int	j;
 	int	k;
+	int	tex_x;
 
-	i = -1;
-	j = -1;
-	k = WIN_HEIGHT / 2 - size_img / 2 - 1; 
-	while (++i < texture.height)
+	i = 0;
+	k = WIN_HEIGHT / 2 - size_img / 2;
+	while (i < texture.height)
 	{
-		while (++j < ratio)
-			raycast->new_buff[(int)(++k * WIN_WIDTH + raycast->count_r)] = \
-			texture.buffer[(int)(i * texture.width + texture.width * \
-			raycast->precise_hit)];
-		j = -1;
+		j = 0;
+		tex_x = (int)(texture.width * raycast->precise_hit);
+		if (tex_x >= texture.width) // Sécuriser l'indice
+			tex_x = texture.width - 1;
+		while (j < ratio && k < WIN_HEIGHT)
+		{
+			raycast->new_buff[k++ * WIN_WIDTH + raycast->count_r] = \
+			texture.buffer[i * texture.width + tex_x];
+			j++;
+		}
+		i++;
 	}
 }
+
 
 static void	fill_column(t_raycast *raycast, t_texture texture)
 {
 	double	len;
 	int		col_size;
-	int		i;
 	int		ratio;
-	
-	i = -1;
-	if (raycast->x == 1)
-		len = raycast->len_x;
-	else
-		len = raycast->len_y;
-	if (raycast->count_r == 100)
-		printf("real len : %f\n", len);
-	if (len < 0.25)
+
+	// Calcul de la longueur
+	len = (raycast->x == 1) ? raycast->len_x : raycast->len_y;
+	if (len < 0.25) // Limite minimale pour éviter des colonnes démesurées
 		len = 0.25;
+
+	// Taille et ratio des colonnes
 	col_size = WIN_HEIGHT / len;
 	if (col_size > WIN_HEIGHT)
 		col_size = WIN_HEIGHT;
-	if (raycast->count_r == 100)
-	{
-		printf("len = %f\n", len);
-		printf("col_size : %d\n", col_size);
-	}
-	ratio = col_size / texture.height;
-	while (++i < col_size)
-		fill_column_bis(raycast, texture, col_size, ratio);
+	ratio = (col_size + texture.height - 1) / texture.height;
+	if (ratio < 1)
+		ratio = 1;
+
+	// Remplissage de la colonne
+	fill_column_bis(raycast, texture, col_size, ratio);
+
+	// Remplissage plafond/sol si la colonne est plus petite que la fenêtre
 	if (col_size < WIN_HEIGHT)
-		ceiling_and_top(raycast, col_size);
+		ceiling_and_floor(raycast, col_size);
 }
+
 
 void	construct_img(t_data *data, t_raycast *raycast)
 {
-	if (raycast->x == 1 && raycast->angle > PI / 2 && \
-	raycast->angle < PI + PI / 2)
+	// Determine which texture to use based on the ray direction and angle
+	if (raycast->x == 1 && raycast->angle > PI / 2 && raycast->angle < PI + PI / 2)
 		fill_column(raycast, data->cub->texture[WEST]);
 	else if (raycast->x == 1)
 		fill_column(raycast, data->cub->texture[EAST]);
-	else if (raycast->angle < PI)	
+	else if (raycast->angle < PI)
 		fill_column(raycast, data->cub->texture[NORTH]);
 	else
 		fill_column(raycast, data->cub->texture[SOUTH]);

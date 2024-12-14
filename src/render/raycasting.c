@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:46:19 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/14 18:16:13 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/14 18:23:36 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ static void	get_exact_hit(t_raycast *raycast)
 	{
 		raycast->precise_hit = raycast->len_x * fabs(cos(raycast->angle)) + \
 		raycast->player->x;
-		raycast->precise_hit -= (int)raycast->precise_hit;
+		raycast->precise_hit -= floor(raycast->precise_hit);
 	}
 	else
 	{
 		raycast->precise_hit = raycast->len_y * fabs(sin(raycast->angle)) + \
 		raycast->player->y;
-		raycast->precise_hit -= (int)raycast->precise_hit;	
+		raycast->precise_hit -= floor(raycast->precise_hit);
 	}
-	if (raycast->x && raycast->step_y == - 1)
+	if (raycast->x && raycast->step_y == -1)
 		raycast->precise_hit = 1.0 - raycast->precise_hit;
 	if (raycast->x == 0 && raycast->step_x == -1)
 		raycast->precise_hit = 1.0 - raycast->precise_hit;
@@ -51,6 +51,7 @@ static void	get_first_dt(t_raycast *raycast)
 	else
 		raycast->len_y = float_pos_x * raycast->delta_y;
 }
+
 
 static bool	get_distances(t_raycast *raycast)
 {
@@ -82,7 +83,7 @@ static bool	get_distances(t_raycast *raycast)
 
 static void	get_directions(t_raycast *raycast)
 {
-	if (raycast->angle > PI / 2 && raycast->angle < PI + PI / 2)
+	if (raycast->angle > PI / 2 && raycast->angle < 3 * PI / 2)
 		raycast->step_x = -1;
 	else
 		raycast->step_x = 1;
@@ -90,7 +91,6 @@ static void	get_directions(t_raycast *raycast)
 		raycast->step_y = 1;
 	else
 		raycast->step_y = -1;
-	
 }
 
 void	raycasting(t_data *data, t_player *player)
@@ -106,11 +106,10 @@ void	raycasting(t_data *data, t_player *player)
 	raycast.data = data;
 	raycast.player = player;
 	raycast.new_img = mlx_new_image(data->mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
-	raycast.new_buff = (int *)(mlx_get_data_addr(raycast.new_img, &bpp, \
-	&sizeline, &endian));
+	raycast.new_buff = (int *)(mlx_get_data_addr(raycast.new_img, &bpp, &sizeline, &endian));
 	while (raycast.count_r < WIN_WIDTH)
 	{
-		raycast.angle += 1 / (WIN_WIDTH / FOV);
+		raycast.angle += FOV / WIN_WIDTH;
 		if (raycast.angle >= 2 * PI)
 			raycast.angle -= 2 * PI;
 		raycast.delta_x = fabs(1 / cos(raycast.angle));
