@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:46:19 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/14 16:29:19 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/14 17:40:47 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,24 +77,34 @@ static void	get_directions(t_raycast *raycast)
 void	raycasting(t_data *data, t_player *player)
 {
 	t_raycast	raycast;
-
+	int	bpp;
+	int	sizeline;
+	int	endian;
+	
 	data->raycast = &raycast;
 	raycast.angle = player->angle - FOV / 2;
 	raycast.count_r = 0;
 	raycast.data = data;
 	raycast.player = player;
+	raycast.new_img = mlx_new_image(data->mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
+	raycast.new_buff = (int *)(mlx_get_data_addr(raycast.new_img, &bpp, \
+	&sizeline, &endian));
 	while (raycast.count_r < WIN_WIDTH)
 	{
-		raycast.angle += 1 / WIN_WIDTH / FOV;
+		raycast.angle += 1 / (WIN_WIDTH / FOV);
 		if (raycast.angle >= 2 * PI)
-			raycast.angle -= 2 * PI;	
+			raycast.angle -= 2 * PI;
+		if (raycast.count_r == 1)
+			printf("angle n = %f\n", raycast.angle);
 		raycast.delta_x = fabs(1 / cos(raycast.angle));
 		raycast.delta_y = fabs(1 / sin(raycast.angle));
 		get_directions(&raycast);
 		raycast.x = get_distances(&raycast);
 		get_exact_hit(&raycast);
 		construct_img(data, &raycast);
+		raycast.count_r++;
 	}
+	// printf("avant \n");
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
 	raycast.new_img, 0, 0);
 }

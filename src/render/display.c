@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:14:59 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/14 16:30:34 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/14 16:57:44 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static void	ceiling_and_top(t_raycast *raycast, int size_img)
 	int	i;
 
 	i = WIN_HEIGHT / 2 - size_img / 2 + 1;
-	if (raycast->count_r == 1)
-		printf("1 er rayon \n");
 	while (--i > 0)
 		raycast->new_buff[(int)(i * WIN_WIDTH + raycast->count_r)] = 0;
 	i = WIN_HEIGHT / 2 + size_img / 2 - 1;
@@ -35,7 +33,7 @@ static void	fill_column_bis(t_raycast *raycast, t_texture texture, \
 
 	i = -1;
 	j = -1;
-	k = WIN_HEIGHT / 2 - size_img - 1; 
+	k = WIN_HEIGHT / 2 - size_img / 2 - 1; 
 	while (++i < texture.height)
 	{
 		while (++j < ratio)
@@ -58,10 +56,14 @@ static void	fill_column(t_raycast *raycast, t_texture texture)
 		len = raycast->len_x;
 	else
 		len = raycast->len_y;
+	if (len < 0.25)
+		len = 0.25;
+	// printf("len = %f\n", len);
 	col_size = WIN_HEIGHT / len;
 	if (col_size > WIN_HEIGHT)
 		col_size = WIN_HEIGHT;
 	ratio = col_size / texture.height;
+	// printf("col_size : %d\n", col_size
 	while (++i < col_size)
 		fill_column_bis(raycast, texture, col_size, ratio);
 	if (col_size < WIN_HEIGHT)
@@ -70,13 +72,6 @@ static void	fill_column(t_raycast *raycast, t_texture texture)
 
 void	construct_img(t_data *data, t_raycast *raycast)
 {
-	int	bpp;
-	int	sizeline;
-	int	endian;
-	
-	raycast->new_img = mlx_new_image(data->mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
-	raycast->new_buff = (int *)(mlx_get_data_addr(raycast->new_img, &bpp, \
-	&sizeline, &endian));
 	if (raycast->x == 1 && raycast->angle > PI / 2 && \
 	raycast->angle < PI + PI / 2)
 		fill_column(raycast, data->cub->texture[WEST]);

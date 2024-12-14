@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:42:09 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/27 12:51:08 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/14 17:47:23 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	cub3d(t_data *data, t_player *player)
 		printf("%s\n", map[i]);
 		i++;
 	}
+	map = data->cub->map->map;	
 	if (map[(int)player->y][(int)player->x] == 'S')
 		player->angle = PI + PI / 2;
 	else if (map[(int)player->y][(int)player->x] == 'N')
@@ -33,9 +34,6 @@ int	cub3d(t_data *data, t_player *player)
 		player->angle = PI;
 	else if (map[(int)player->y][(int)player->x] == 'E')
 		player->angle = 2 * PI;
-	else
-		player->angle = PI / 2;
-	printf("angle du joueur : %f\n", player->angle);
 	raycasting(data, data->player);
 	// handle_close(data);
 	// handle_move(data);

@@ -75,7 +75,7 @@ typedef struct s_data t_data;
 typedef struct	raycast
 {
 	double		angle;
-	double		count_r;
+	int			count_r;
 	double		delta_x;
 	double		delta_y;
 	double		len_x;
