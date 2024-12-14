@@ -46,8 +46,8 @@ typedef struct s_cub
 	char					**file;
 	char					*file_without_split;
 	t_texture				*texture;
-	unsigned long			hex_floor;
-	unsigned long			hex_ceiling;
+	int						hex_floor;
+	int						hex_ceiling;
 	char					*char_floor;
 	char					*char_ceiling;
 	t_map					*map;
@@ -108,6 +108,7 @@ typedef struct	s_data
 size_t	ft_tablen(char **tab);
 void	close_all(t_data *data, char *stingError);
 void	replace_tabs_with_spaces(char **map, t_data *data);
+void	convert_color(t_data *data);
 
 // init 
 void	init_data(t_data *data);

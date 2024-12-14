@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:13:14 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 15:29:58 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/14 14:12:27 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	set_cub(t_data *data, char *av)
 	data->cub->file = read_cub(av, data);
 	read_map(data->cub->file, data);
 	read_texture(data->cub->file, data);
+	convert_color(data);
 	while (++i < 4)
 		if (check_xpm(data->cub->texture[i].path))
 			return (close_all(data, "Wrong texture extension"), 1);
