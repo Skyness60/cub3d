@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:46:19 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/13 16:29:00 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/14 16:29:19 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ static void	get_exact_hit(t_raycast *raycast)
 		raycast->player->y;
 		raycast->precise_hit -= (int)raycast->precise_hit;	
 	}
+	if (raycast->x && raycast->step_y == - 1)
+		raycast->precise_hit = 1.0 - raycast->precise_hit;
+	if (raycast->x == 0 && raycast->step_x == -1)
+		raycast->precise_hit = 1.0 - raycast->precise_hit;
 }
 
 static bool	get_distances(t_raycast *raycast)
@@ -51,8 +55,8 @@ static bool	get_distances(t_raycast *raycast)
 			if (raycast->data->cub->map->map[raycast->pos_y][raycast->pos_x] \
 			== '1')
 				return (0);
-			raycast->len_x += raycast->delta_x;
-			raycast->pos_x += raycast->step_x;
+			raycast->len_y += raycast->delta_y;
+			raycast->pos_y += raycast->step_y;
 		}
 	} 
 }

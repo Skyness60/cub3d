@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:14:59 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/13 16:33:47 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/14 16:30:34 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	ceiling_and_top(t_raycast *raycast, int size_img)
 	int	i;
 
 	i = WIN_HEIGHT / 2 - size_img / 2 + 1;
+	if (raycast->count_r == 1)
+		printf("1 er rayon \n");
 	while (--i > 0)
 		raycast->new_buff[(int)(i * WIN_WIDTH + raycast->count_r)] = 0;
 	i = WIN_HEIGHT / 2 + size_img / 2 - 1;
@@ -56,13 +58,14 @@ static void	fill_column(t_raycast *raycast, t_texture texture)
 		len = raycast->len_x;
 	else
 		len = raycast->len_y;
-	col_size = PROJ_PLANE_DT / (len / 2);
+	col_size = WIN_HEIGHT / len;
 	if (col_size > WIN_HEIGHT)
 		col_size = WIN_HEIGHT;
 	ratio = col_size / texture.height;
 	while (++i < col_size)
 		fill_column_bis(raycast, texture, col_size, ratio);
-	ceiling_and_top(raycast, col_size);
+	if (col_size < WIN_HEIGHT)
+		ceiling_and_top(raycast, col_size);
 }
 
 void	construct_img(t_data *data, t_raycast *raycast)
