@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sperron <sperron@student>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:03:37 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/10 11:15:16 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/15 13:26:31 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,19 @@ static void	init_cub(t_cub *cub, t_data *data)
 	add_ptr(data->trash_ptr, cub->map);
 }
 
+static void	init_keys(t_data *data)
+{
+	allocate_memory((void **)&data->keys, sizeof(t_keys), \
+	"Malloc error for t_keys", data);
+	data->keys->w = false;
+	data->keys->s = false;
+	data->keys->a = false;
+	data->keys->d = false;
+	data->keys->left = false;
+	data->keys->right = false;
+	add_ptr(data->trash_ptr, data->keys);
+}
+
 void	init_data(t_data *data)
 {
 	allocate_memory((void **)&data->trash_ptr, sizeof(t_garb_c), \
@@ -70,6 +83,7 @@ void	init_data(t_data *data)
 	"Malloc error for t_cub", data);
 	init_cub(data->cub, data);
 	add_ptr(data->trash_ptr, data->cub);
+	init_keys(data);
 	allocate_memory((void **)&data->player, sizeof(t_player), \
 	"Malloc error for t_cub", data);
 	add_ptr(data->trash_ptr, data->player);

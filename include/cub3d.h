@@ -4,6 +4,7 @@
 # include "../mlx/mlx.h"
 # include <math.h>
 # include <X11/keysym.h>
+#include <X11/X.h>
 
 # define PI 3.14159265358979323846
 # define FOV PI / 3
@@ -31,6 +32,16 @@ typedef struct	s_texture
 	int		sizeline;
 	int		endian;
 }				t_texture;
+
+typedef struct	s_keys
+{
+	bool	w;
+	bool	s;
+	bool	a;
+	bool	d;
+	bool	left;
+	bool	right;
+}				t_keys;
 
 typedef struct	s_map
 {
@@ -97,6 +108,7 @@ typedef struct	s_data
 {
 	t_cub					*cub;
 	t_player				*player;
+	t_keys					*keys;
 	t_mlx					*mlx;
 	t_garb_c				*trash_ptr;
 	t_garb_c				*raycast_trash;
@@ -138,7 +150,9 @@ void	open_cub3d(t_data *data);
 int		cub3d(t_data *data, t_player *player);
 // mlx
 void	handle_close(t_data *data);
-int		handle_move_keypress(int keycode, t_data *data);
+int		handle_move_keypress(t_data *data);
+int		handle_keypress(int keycode, t_data *data);
+int		handle_keyrelease(int keycode, t_data *data);
 void	handle_move(t_data *data);
 
 // TEMPORAIRE 
