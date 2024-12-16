@@ -72,15 +72,15 @@ int	handle_move_keypress(t_data *data)
 {
 	if (data->keys->w)
 		move_forward(data);
-	else if (data->keys->s)
+	if (data->keys->s)
 		move_backward(data);
-	else if (data->keys->a)
+	if (data->keys->a)
 		move_left(data);
-	else if (data->keys->d)
+	if (data->keys->d)
 		move_right(data);
-	else if (data->keys->left)
+	if (data->keys->left)
 		data->player->angle -= 0.05;
-	else if (data->keys->right)
+	if (data->keys->right)
 		data->player->angle += 0.05;
 	//handle_debug_move(data);
 	//print_map_with_player(data);
