@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 08:35:41 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/22 15:41:11 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/16 10:42:09 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	init_cub3d(char *av)
 	if (data->cub->map->height < 3 || data->cub->map->width < 3)
 		return (close_all(data, "Map error"), 1);
 	open_cub3d(data);
-	return (clear_all(data), 0);
+	return (0);
 }
 
 int	main(int ac, char **av)

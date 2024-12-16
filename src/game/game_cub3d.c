@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_cub3d.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sperron <sperron@student>                  +#+  +:+       +#+        */
+/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:42:09 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/15 13:59:27 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/16 10:40:49 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void setup_hook(t_data *data)
 {
 	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, handle_keypress, data);
 	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, handle_keyrelease, data);
+	handle_close(data);
 }
 
 int	cub3d(t_data *data, t_player *player)

@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:15:17 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/11 09:08:21 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/16 10:44:29 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	get_img_info(t_texture *img, t_data *data)
 	&img->height);
 	img->buffer = (int*)mlx_get_data_addr(img->img, &img->bpp, &img->sizeline,\
 	&img->endian);
-	add_ptr(data->trash_ptr, img->buffer);
 }
 
 void	open_cub3d(t_data *data)

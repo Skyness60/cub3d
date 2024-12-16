@@ -4,7 +4,7 @@ CC = cc -g3
 
 INCLUDE_DIR = ./include/
 
-CFLAGS = -g -fsanitize=address -Wall -Wextra -Werror -I$(INCLUDE_DIR)
+CFLAGS = -g -Wall -Wextra -Werror -I$(INCLUDE_DIR)
 
 
 LINKLIBS =	-L./export/libft -lft \

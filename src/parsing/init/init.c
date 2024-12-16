@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sperron <sperron@student>                  +#+  +:+       +#+        */
+/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:03:37 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/15 13:26:31 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/16 10:20:54 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	init_data(t_data *data)
 	add_ptr(data->trash_ptr, data->mlx);
 	allocate_memory((void **)&data->raycast, sizeof(t_raycast), \
 	"Malloc error for t_raycasting", data);
+	add_ptr(data->trash_ptr, data->raycast);
 	data->mlx->mlx = NULL;
 	data->mlx->win = NULL;
 	data->player->orientation = '\0';
