@@ -141,6 +141,7 @@ int		check_map(t_data *data);
 bool	check_empty_line(t_data *data);
 int		verify_win(t_data *data);
 
+
 // raycasting & render
 void	raycasting(t_data *data, t_player *player);
 void	construct_img(t_data *data, t_raycast *raycast);

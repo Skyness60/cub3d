@@ -33,10 +33,14 @@ void	flood_fill(t_data *data, int x, int y, int height)
 	&& data->cub->map->map_copy[y + 1][x] != '0')
 		close_all(data, "Map not closed: hole below");
 	data->cub->map->map_copy[y][x] = 'X';
-	flood_fill(data, x - 1, y, height);
 	flood_fill(data, x + 1, y, height);
+	flood_fill(data, x - 1, y, height);
 	flood_fill(data, x, y - 1, height);
 	flood_fill(data, x, y + 1, height);
+	flood_fill(data, x + 1, y + 1, height);
+	flood_fill(data, x - 1, y - 1, height);
+	flood_fill(data, x + 1, y - 1, height);
+	flood_fill(data, x - 1, y + 1, height);
 }
 
 void	ft_to_fill(t_data *data, int move_x, int move_y, int height)
@@ -88,8 +92,8 @@ int	verify_win(t_data *data)
 	(void *)data->cub->map->map_copy, data->cub->map->height, true);
 	ft_player_position(data->cub->map->map_copy, data, \
 	data->player->orientation);
-	replace_tabs_with_spaces(data->cub->map->map_copy, data);
 	ft_to_fill(data, data->player->x, data->player->y, \
 	data->cub->map->height);
 	return (0);
 }
+

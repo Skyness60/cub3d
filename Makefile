@@ -28,7 +28,6 @@ SRC = 		src/cub3d.c \
 			src/parsing/utils/utils_parsing.c \
 			src/parsing/cub/cub_map_utils.c \
 			src/parsing/algo/flood_fill.c \
-			src/parsing/utils/tab_replace.c \
 			src/game/open/open_cub3d.c \
 			src/game/handle/handle_close.c \
 			src/game/handle/handle_move.c \
