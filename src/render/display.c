@@ -35,6 +35,7 @@ void draw_column(t_raycast *raycast, t_texture texture, int col_size)
     if (tex_x < 0)
         tex_x += texture.width;
 
+
     // Calcul de l'index Y dans la texture pour chaque pixel de la colonne
     double tex_step = (double)texture.height / col_size;
     double tex_pos = 0.0;
@@ -81,7 +82,6 @@ void fill_column(t_raycast *raycast, t_texture texture)
 
 void construct_img(t_data *data, t_raycast *raycast)
 {
-    // Déterminer la texture à utiliser en fonction de la direction du rayon
     if (raycast->x == 1 && raycast->angle > PI / 2 && raycast->angle < PI + PI / 2)
         fill_column(raycast, data->cub->texture[WEST]);
     else if (raycast->x == 1)
@@ -90,4 +90,5 @@ void construct_img(t_data *data, t_raycast *raycast)
         fill_column(raycast, data->cub->texture[NORTH]);
     else
         fill_column(raycast, data->cub->texture[SOUTH]);
+
 }

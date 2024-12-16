@@ -14,25 +14,18 @@
 
 static void	get_exact_hit(t_raycast *raycast)
 {
-	if (raycast->x == 1)
+	if (raycast->len_x < raycast->len_y)
 	{
-		raycast->precise_hit = raycast->len_x * fabs(cos(raycast->angle)) + \
-		raycast->player->x;
-		raycast->precise_hit -= floor(raycast->precise_hit);
+		raycast->x = 1;
+		raycast->precise_hit = raycast->len_x;
 	}
 	else
 	{
-		raycast->precise_hit = raycast->len_y * fabs(sin(raycast->angle)) + \
-		raycast->player->y;
-		raycast->precise_hit -= floor(raycast->precise_hit);
-		if (raycast->precise_hit < 0)
-			raycast->precise_hit += 1.0;
+		raycast->x = 0;
+		raycast->precise_hit = raycast->len_y;
 	}
-	if (raycast->x && raycast->step_y == -1)
-		raycast->precise_hit = 1.0 - raycast->precise_hit;
-	if (raycast->x == 0 && raycast->step_x == -1)
-		raycast->precise_hit = 1.0 - raycast->precise_hit;
 }
+
 static void	get_first_dt(t_raycast *raycast)
 {
 	double	float_pos_x;

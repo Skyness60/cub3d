@@ -1,7 +1,7 @@
-NO ./assets/textures/brick.xpm
-SO ./assets/textures/stone.xpm
-WE ./assets/textures/metal.xpm
-EA ./assets/textures/wood.xpm
+NO ./assets/textures/brick_hi.xpm
+SO ./assets/textures/stone_hi.xpm
+WE ./assets/textures/metal_hi.xpm
+EA ./assets/textures/wood_hi.xpm
 
 F   0,     0,  255
 
