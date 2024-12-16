@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_close.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:53:59 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/16 10:39:05 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/16 11:06:48 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	handle_close_icon(t_data *data)
+int	handle_close_icon(t_data *data)
 {
 	ft_dprintf(1, "Cub3D closed\n");
 	mlx_destroy_image(data->mlx->mlx, data->cub->texture[NORTH].img);
@@ -28,15 +28,8 @@ static int	handle_close_icon(t_data *data)
 	return (0);
 }
 
-static int	handle_close_keypress(int keycode, t_data *data)
-{
-	if (keycode == XK_Escape)
-		handle_close_icon(data);
-	return (0);
-}
 
 void	handle_close(t_data *data)
 {
 	mlx_hook(data->mlx->win, 17, 0, handle_close_icon, data);
-	mlx_hook(data->mlx->win, 2, 1L << 0, handle_close_keypress, data);
 }

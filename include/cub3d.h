@@ -153,6 +153,7 @@ void	handle_close(t_data *data);
 int		handle_move_keypress(t_data *data);
 int		handle_keypress(int keycode, t_data *data);
 int		handle_keyrelease(int keycode, t_data *data);
+int	handle_close_icon(t_data *data);
 void	handle_move(t_data *data);
 
 // TEMPORAIRE 

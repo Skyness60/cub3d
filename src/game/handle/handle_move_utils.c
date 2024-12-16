@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_move_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:20:58 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/16 10:10:02 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/16 11:06:21 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	handle_move_keypress(t_data *data)
 		move_forward(data);
 	else if (data->keys->s)
 		move_backward(data);
-	else if (data->keys->d)
-		move_left(data);
 	else if (data->keys->a)
+		move_left(data);
+	else if (data->keys->d)
 		move_right(data);
 	else if (data->keys->left)
 		data->player->angle -= 0.1;
@@ -101,6 +101,8 @@ int	handle_keypress(int keycode, t_data *data)
 		data->keys->left = true;
 	else if (keycode == XK_Right)
 		data->keys->right = true;
+	else if (keycode == XK_Escape)
+		handle_close_icon(data);
 	return (0);
 }
 
