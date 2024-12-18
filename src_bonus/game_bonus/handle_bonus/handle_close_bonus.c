@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_close.c                                     :+:      :+:    :+:   */
+/*   handle_close_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:53:59 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/16 11:06:48 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/18 18:09:56 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <X11/Xlib.h>
 
 int	handle_close_icon(t_data *data)
 {
@@ -19,6 +20,8 @@ int	handle_close_icon(t_data *data)
 	mlx_destroy_image(data->mlx->mlx, data->cub->texture[SOUTH].img);
 	mlx_destroy_image(data->mlx->mlx, data->cub->texture[EAST].img);
 	mlx_destroy_image(data->mlx->mlx, data->cub->texture[WEST].img);
+	printf("destroyed\n");
+	mlx_mouse_show(data->mlx->mlx, data->mlx->win);
 	if (data->mlx->win != NULL)
 		mlx_destroy_window(data->mlx->mlx, data->mlx->win);
 	if (data->mlx != NULL)

@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:46:19 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/18 10:45:57 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/18 15:40:31 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 static void	get_exact_hit(t_raycast *raycast)
 {
 	if (raycast->x)
-		raycast->precise_hit = raycast->len_x;
+		raycast->precise_hit = raycast->player->y + \
+		raycast->len_x * raycast->ray_dir_y;
 	else
-		raycast->precise_hit = raycast->len_y;
+		raycast->precise_hit = raycast->player->x + \
+		raycast->len_y * raycast->ray_dir_x;
 }
 
 static void	get_first_dt(t_raycast *raycast)
@@ -81,7 +83,8 @@ static void	get_directions(t_raycast *raycast)
 		raycast->step_y = -1;
 	else
 		raycast->step_y = 1;
-
+	raycast->ray_dir_x = cos(raycast->angle);
+	raycast->ray_dir_y = sin(raycast->angle);
 }
 
 void	raycasting(t_data *data, t_player *player)
@@ -92,6 +95,7 @@ void	raycasting(t_data *data, t_player *player)
 	int	endian;
 	
 	data->raycast = &raycast;
+	raycast.debugg = 1;
 	raycast.angle = player->angle - FOV / 2;
 	raycast.count_r = 0;
 	raycast.data = data;
@@ -105,8 +109,12 @@ void	raycasting(t_data *data, t_player *player)
 			raycast.angle += 2 * PI;
 		if (raycast.angle >= 2 * PI)
 			raycast.angle -= 2 * PI;
-		raycast.delta_x = fabs(1 / (cos(raycast.angle) + 1e-6));
-		raycast.delta_y = fabs(1 / (sin(raycast.angle) + 1e-6));
+		raycast.delta_x = fabs(1 / (cos(raycast.angle)));
+		raycast.delta_y = fabs(1 / (sin(raycast.angle)));
+		if (raycast.delta_x < 1e-6)
+			raycast.delta_x = 1e-6;
+		if (raycast.delta_y < 1e-6)
+			raycast.delta_y = 1e-6;
 		get_directions(&raycast);
 		raycast.x = get_distances(&raycast);
 		get_exact_hit(&raycast);

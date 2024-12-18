@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flood_fill.c                                       :+:      :+:    :+:   */
+/*   flood_fill_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 08:49:14 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 16:21:11 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/18 17:36:19 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,20 @@ void	flood_fill(t_data *data, int x, int y, int height)
 		return ;
 	if ((x == 0 || y == 0 || x == data->cub->map->width - 1 \
 	|| y == height - 1) && (data->cub->map->map_copy[y][x] == '0' \
-	|| data->cub->map->map_copy[y][x] == ' '))
+	|| data->cub->map->map_copy[y][x] == ' ' || \
+	data->cub->map->map_copy[y][x] == 'D'))
 		return (close_all(data, "Map not closed: hole on the border"));
 	if (y > 0 && data->cub->map->map_copy[y - 1][x] != '1' \
 	&& data->cub->map->map_copy[y - 1][x] != 'X' && \
 	data->cub->map->map_copy[y - 1][x] != ' ' \
-	&& data->cub->map->map_copy[y - 1][x] != '0')
+	&& data->cub->map->map_copy[y - 1][x] != '0' \
+	&& data->cub->map->map_copy[y - 1][x] != 'D')
 		close_all(data, "Map not closed: hole above");
 	if (y < height - 1 && data->cub->map->map_copy[y + 1][x] != '1' \
 	&& data->cub->map->map_copy[y + 1][x] != 'X' \
 	&& data->cub->map->map_copy[y + 1][x] != ' ' \
-	&& data->cub->map->map_copy[y + 1][x] != '0')
+	&& data->cub->map->map_copy[y + 1][x] != '0' \
+	&& data->cub->map->map_copy[y + 1][x] != 'D')
 		close_all(data, "Map not closed: hole below");
 	data->cub->map->map_copy[y][x] = 'X';
 	flood_fill(data, x + 1, y, height);

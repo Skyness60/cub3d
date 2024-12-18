@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 11:34:17 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/18 14:05:45 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/18 16:17:07 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ static void	draw_walls(void *img, t_data *data)
 	int	map_y;
 
 	y = 0;
+
 	while (y < data->cub->map->height)
 	{
 		x = 0;
-		while (x < data->cub->map->width)
+		while (data->cub->map->map[y][x])
 		{
 			if (data->cub->map->map[y][x] == '1')
 			{

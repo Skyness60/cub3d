@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:42:09 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/18 14:51:54 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/18 17:11:48 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	cub3d_loop(t_data *data)
 }
 
 static void setup_hook(t_data *data)
-{
+{	
     mlx_hook(data->mlx->win, KeyPress, KeyPressMask, handle_keypress, data);
     mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, handle_keyrelease, data);
     handle_close(data);
@@ -42,6 +42,7 @@ int	cub3d(t_data *data, t_player *player)
 	else if (map[(int)player->y][(int)player->x] == 'E')
 		player->angle = 2 * PI;
 	setup_hook(data);
+	player->angle += 0.001;
 	mlx_loop_hook(data->mlx->mlx, cub3d_loop, data);
 	// handle_move(data);
 	// handle_close(data);

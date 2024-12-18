@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:03:37 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/18 15:38:47 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/18 18:10:32 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ static void	init_cub(t_cub *cub, t_data *data)
 	cub->height = 1;
 	cub->width = 0;
 	cub->map = NULL;
-	cub->hex_ceiling = 0;
-	cub->hex_floor = 0;
-	cub->havedoor = false;
-	cub->door = NULL;
+
 	cub->char_ceiling = ft_strdup("");
 	add_ptr(data->trash_ptr, cub->char_ceiling);
 	cub->char_floor = ft_strdup("");
@@ -58,9 +55,6 @@ static void	init_cub(t_cub *cub, t_data *data)
 	allocate_memory((void **)&cub->map, sizeof(t_map), \
 	"Malloc error for t_map", data);
 	add_ptr(data->trash_ptr, cub->map);
-	allocate_memory((void **)&data->cub->door, sizeof(t_player), \
-	"Malloc error for t_cub", data);
-	add_ptr(data->trash_ptr, data->cub->door);
 }
 
 static void	init_keys(t_data *data)
@@ -98,6 +92,7 @@ void	init_data(t_data *data)
 	allocate_memory((void **)&data->raycast, sizeof(t_raycast), \
 	"Malloc error for t_raycasting", data);
 	add_ptr(data->trash_ptr, data->raycast);
+	data->raycast->new_buff = NULL;
 	data->mlx->mlx = NULL;
 	data->mlx->win = NULL;
 	data->player->orientation = '\0';

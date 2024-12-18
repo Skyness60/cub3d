@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 07:12:51 by sperron           #+#    #+#             */
-/*   Updated: 2024/05/21 07:17:13 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/18 16:02:58 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strdup(const char *s)
 	int		i;
 
 	i = 0;
-	renv = (char *)malloc(ft_strlen((char *)s) + 1);
+	renv = (char *)malloc(ft_strlen(s) + 1);
 	if (renv == NULL)
 	{
 		free(renv);

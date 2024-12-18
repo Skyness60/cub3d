@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub_texture.c                                      :+:      :+:    :+:   */
+/*   cub_texture_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:25:35 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/21 08:13:46 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/18 18:10:24 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ static void	get_texture(t_data *data, char *line)
 	add_ptr_tab(data->trash_ptr, (void **)tab, ft_tablen(tab), true);
 	i = -1;
 	while (tab[++i])
-	{
 		check_orientation(data, tab, i);
-	}
 	i = -1;
 	while (tab[++i])
 		remove_ptr(data->trash_ptr, tab[i]);

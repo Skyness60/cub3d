@@ -14,6 +14,7 @@
 # define MINIMAP_PLAYER_COLOR 0xFF0000
 # define MINIMAP_BORDER_COLOR 0xFFFFFF
 # define MINIMAP_BACKGROUND_COLOR 0xc4c4c4
+# define PROJ_PLANE WIN_WIDTH / (2 * 0.57735026919)
 
 
 typedef enum e_orientation
@@ -55,14 +56,6 @@ typedef struct	s_map
 	int		height;
 }				t_map;
 
-typedef struct	s_door
-{
-	double		x;
-	double		y;
-	bool		open;
-	float		progress;
-	bool		animation;
-}				t_door;
 
 typedef struct s_cub
 {
@@ -74,8 +67,6 @@ typedef struct s_cub
 	char					*char_floor;
 	char					*char_ceiling;
 	t_map					*map;
-	bool					*havedoor;
-	t_door					*door;
 	int						width;
 	int						height;
 }				t_cub;
@@ -104,6 +95,8 @@ typedef struct	raycast
 	int			count_r;
 	double		delta_x;
 	double		delta_y;
+	double		ray_dir_x;
+	double		ray_dir_y;
 	double		len_x;
 	double		len_y;
 	int			pos_x;
@@ -117,6 +110,7 @@ typedef struct	raycast
 	int			*new_buff;
 	t_data		*data;
 	t_player	*player;
+	bool		debugg;
 }	t_raycast;
 
 typedef struct	s_data
