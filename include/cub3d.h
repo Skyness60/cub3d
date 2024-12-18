@@ -105,6 +105,7 @@ typedef struct	raycast
 	int			*new_buff;
 	t_data		*data;
 	t_player	*player;
+	bool		debugg;
 }	t_raycast;
 
 typedef struct	s_data

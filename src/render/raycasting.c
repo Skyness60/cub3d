@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:46:19 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/18 15:07:18 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/18 15:40:31 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 static void	get_exact_hit(t_raycast *raycast)
 {
 	if (raycast->x)
-		raycast->precise_hit = raycast->len_x * raycast->ray_dir_y \
-		+ raycast->player->x;
+		raycast->precise_hit = raycast->player->y + \
+		raycast->len_x * raycast->ray_dir_y;
 	else
-		raycast->precise_hit = raycast->len_y * raycast->ray_dir_x \
-		+ raycast->player->y;
+		raycast->precise_hit = raycast->player->x + \
+		raycast->len_y * raycast->ray_dir_x;
 }
 
 static void	get_first_dt(t_raycast *raycast)
@@ -95,6 +95,7 @@ void	raycasting(t_data *data, t_player *player)
 	int	endian;
 	
 	data->raycast = &raycast;
+	raycast.debugg = 1;
 	raycast.angle = player->angle - FOV / 2;
 	raycast.count_r = 0;
 	raycast.data = data;

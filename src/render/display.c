@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 15:14:59 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/18 15:09:22 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/18 15:45:33 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void draw_column(t_raycast *raycast, t_texture texture, int col_size)
 	int		screen_y;
 
 	screen_pos = WIN_HEIGHT / 2 - col_size / 2;
-	tex_x = (int)(texture.width * fmod(raycast->precise_hit, 1.0));
+	tex_x = (int)(texture.width * fmod(raycast->precise_hit, 1.0));				
 	ratio = (double)texture.height / col_size;
 	tex_y = 0.0;
 	i = -1;
@@ -79,7 +79,7 @@ void construct_img(t_data *data, t_raycast *raycast)
     else if (raycast->x == 1)
         fill_column(raycast, data->cub->texture[EAST]);
     else if (raycast->angle <= PI)
-        fill_column(raycast, data->cub->texture[NORTH]);
-    else
         fill_column(raycast, data->cub->texture[SOUTH]);
+    else
+        fill_column(raycast, data->cub->texture[NORTH]);
 }
