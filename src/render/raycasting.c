@@ -6,7 +6,7 @@
 /*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:46:19 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/16 10:12:02 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/18 10:45:57 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,10 @@
 
 static void	get_exact_hit(t_raycast *raycast)
 {
-	if (raycast->len_x < raycast->len_y)
-	{
-		raycast->x = 1;
+	if (raycast->x)
 		raycast->precise_hit = raycast->len_x;
-	}
 	else
-	{
-		raycast->x = 0;
 		raycast->precise_hit = raycast->len_y;
-	}
 }
 
 static void	get_first_dt(t_raycast *raycast)
@@ -119,7 +113,7 @@ void	raycasting(t_data *data, t_player *player)
 		construct_img(data, &raycast);
 		raycast.count_r++;
 	}
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
-	raycast.new_img, 0, 0);
-	mlx_destroy_image(data->mlx->mlx, raycast.new_img);
+		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
+		raycast.new_img, 0, 0);
+		mlx_destroy_image(data->mlx->mlx, raycast.new_img);
 }
