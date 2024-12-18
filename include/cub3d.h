@@ -10,6 +10,7 @@
 # define FOV PI / 3
 # define WIN_HEIGHT 1080
 # define WIN_WIDTH 1920
+# define PROJ_PLANE WIN_WIDTH / (2 * 0.57735026919)
 
 
 typedef enum e_orientation
@@ -89,6 +90,8 @@ typedef struct	raycast
 	int			count_r;
 	double		delta_x;
 	double		delta_y;
+	double		ray_dir_x;
+	double		ray_dir_y;
 	double		len_x;
 	double		len_y;
 	int			pos_x;
