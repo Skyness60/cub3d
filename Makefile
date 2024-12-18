@@ -38,6 +38,33 @@ SRC = 		src/cub3d.c \
 			src/render/display.c \
 			src/parsing/utils/convert_color.c \
 
+SRC_BONUS = src_bonus/cub3d_bonus.c \
+			src_bonus/parsing_bonus/init_bonus/init_bonus.c \
+			src_bonus/parsing_bonus/utils_bonus/ft_free_bonus.c \
+			src_bonus/parsing_bonus/cub_bonus/cub_bonus.c \
+			src_bonus/parsing_bonus/cub_bonus/cub_file_bonus.c \
+			src_bonus/parsing_bonus/cub_bonus/cub_map_bonus.c \
+			src_bonus/parsing_bonus/cub_bonus/cub_texture_bonus.c \
+			src_bonus/parsing_bonus/cub_bonus/cub_texture_color_bonus.c \
+			src_bonus/parsing_bonus/tmp_bonus/debug_map_bonus.c \
+			src_bonus/parsing_bonus/check_bonus/check_name_bonus.c \
+			src_bonus/parsing_bonus/utils_bonus/close_all_bonus.c \
+			src_bonus/parsing_bonus/check_bonus/check_map_bonus.c \
+			src_bonus/parsing_bonus/utils_bonus/utils_parsing_bonus.c \
+			src_bonus/parsing_bonus/cub_bonus/cub_map_utils_bonus.c \
+			src_bonus/parsing_bonus/algo_bonus/flood_fill_bonus.c \
+			src_bonus/game_bonus/open_bonus/open_cub3d_bonus.c \
+			src_bonus/game_bonus/handle_bonus/handle_close_bonus.c \
+			src_bonus/game_bonus/handle_bonus/handle_move_bonus.c \
+			src_bonus/game_bonus/handle_bonus/handle_move_utils_bonus.c \
+			src_bonus/game_bonus/tmp_bonus/handle_move_debug_bonus.c \
+			src_bonus/game_bonus/game_cub3d_bonus.c \
+			src_bonus/render_bonus/raycasting_bonus.c \
+			src_bonus/render_bonus/display_bonus.c \
+			src_bonus/parsing_bonus/utils_bonus/convert_color_bonus.c \
+			src_bonus/game_bonus/bonus/minimap.c \
+			src_bonus/game_bonus/bonus/minimap_utils.c \
+
 MLX_PATH = ./mlx/
 
 MINI_LIBX = MiniLibX
@@ -45,6 +72,7 @@ MINI_LIBX = MiniLibX
 MLX_FLAGS = -lmlx -lmlx_Linux -lX11 -lXext -lm
 
 OBJECTS = $(SRC:.c=.o)
+OBJECTS_BONUS = $(SRC_BONUS:.c=.o)
 #################################################################################
 
 RED = '\033[0;31m'
@@ -60,6 +88,7 @@ NC = '\033[0m'
 
 
 OBJ = $(SRC:.c=.o)
+OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 all : $(NAME)
 
@@ -77,9 +106,19 @@ $(NAME) : $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LINKLIBS) -L$(MLX_PATH) $(MLX_FLAGS)
 	@echo $(BLUE)✅ $@ built! $(NC)
 
+bonus : $(OBJ_BONUS)
+	@make -C ./export/libft --no-print-directory
+	@make -C ./export/garbage_collector --no-print-directory
+	@make -C ./export/garbage_descriptor --no-print-directory
+	@make -C ./export/printf --no-print-directory
+	@make -C ./export/gnl --no-print-directory
+	@make -C $(MLX_PATH) --no-print-directory
+	@$(CC) $(CFLAGS) $(OBJ_BONUS) -o $(NAME) $(LINKLIBS) -L$(MLX_PATH) $(MLX_FLAGS)
+	@echo $(BLUE)✅ $@ with bonus built! $(NC)
+
 clean:
-	@rm -f $(OBJECTS)
-	@echo $(YELLOW)🗑️ $(OBJECTS) deleted! $(NC)
+	@rm -f $(OBJECTS) $(OBJECTS_BONUS)
+	@echo $(YELLOW)🗑️ $(OBJECTS) and $(OBJECTS_BONUS) deleted! $(NC)
 
 fclean:	clean
 	@rm -rf $(NAME)
@@ -93,4 +132,4 @@ fclean:	clean
 
 re: fclean all
 
-.PHONY: re all clean fclean
+.PHONY: re all clean fclean bonus

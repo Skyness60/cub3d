@@ -10,6 +10,10 @@
 # define FOV PI / 3
 # define WIN_HEIGHT 1080
 # define WIN_WIDTH 1920
+# define MINIMAP_SCALE 0.2
+# define MINIMAP_PLAYER_COLOR 0xFF0000
+# define MINIMAP_BORDER_COLOR 0xFFFFFF
+# define MINIMAP_BACKGROUND_COLOR 0xc4c4c4
 
 
 typedef enum e_orientation
@@ -51,6 +55,15 @@ typedef struct	s_map
 	int		height;
 }				t_map;
 
+typedef struct	s_door
+{
+	double		x;
+	double		y;
+	bool		open;
+	float		progress;
+	bool		animation;
+}				t_door;
+
 typedef struct s_cub
 {
 	char					**file;
@@ -61,6 +74,8 @@ typedef struct s_cub
 	char					*char_floor;
 	char					*char_ceiling;
 	t_map					*map;
+	bool					*havedoor;
+	t_door					*door;
 	int						width;
 	int						height;
 }				t_cub;
@@ -161,4 +176,13 @@ void	handle_move(t_data *data);
 void	debug_map(t_data *data);
 void	handle_debug_move(t_data *data);
 void	print_map_with_player(t_data *data);
+
+// bonus
+void *minimap(t_data *data, void *img);
+int	*get_buffer(void *img);
+void	draw_square(void *img, int x, int y, int color);
+void	draw_camera_tip(int *buffer, int x, int y, double angle);
+void	draw_camera(void *img, int x, int y, double angle);
+int	handle_mouse_move(t_data *data);
+
 #endif // !CUB3D_H

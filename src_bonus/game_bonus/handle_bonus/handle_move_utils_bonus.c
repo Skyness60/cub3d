@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_move_utils.c                                :+:      :+:    :+:   */
+/*   handle_move_utils_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:20:58 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/18 14:16:35 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/18 14:59:35 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <math.h>
+# define RS 0.1 
 
 static void	move_forward(t_data *data)
 {
@@ -122,3 +124,29 @@ int	handle_keyrelease(int keycode, t_data *data)
 		data->keys->right = false;
 	return (0);
 }
+
+int handle_mouse_move(t_data *data)
+{
+    double tmp;
+    double tmp_plane;
+    float rs;
+    int x;
+    int y;
+    int mouse_offset;
+
+    mlx_mouse_get_pos(data->mlx->mlx, data->mlx->win, &x, &y);
+    mouse_offset = x - WIN_WIDTH / 2;
+    rs = (RS / 50.0) * (float)mouse_offset;
+    tmp = data->player->angle;
+    tmp_plane = data->player->orientation;
+    data->player->angle += rs;
+    if (data->player->angle > 2 * PI)
+        data->player->angle -= 2 * PI;
+    else if (data->player->angle < 0)
+        data->player->angle += 2 * PI;
+    data->player->orientation = tmp * cos(rs) - tmp_plane * sin(rs);
+    tmp_plane = tmp * sin(rs) + tmp_plane * cos(rs);
+    mlx_mouse_move(data->mlx->mlx, data->mlx->win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+    return (0);
+}
+
