@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:42:09 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/18 17:12:10 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/24 12:23:20 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,20 @@ int	cub3d_loop(t_data *data)
 	return (0);
 }
 
-static void setup_hook(t_data *data)
+static void	setup_hook(t_data *data)
 {
-	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, handle_keypress, data);
-	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, handle_keyrelease, data);
+	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, \
+	handle_keypress, data);
+	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, \
+	handle_keyrelease, data);
 	handle_close(data);
 }
 
 int	cub3d(t_data *data, t_player *player)
 {
 	char	**map;
-	map = data->cub->map->map;	
+
+	map = data->cub->map->map;
 	if (map[(int)player->y][(int)player->x] == 'N')
 		player->angle = PI + PI / 2;
 	else if (map[(int)player->y][(int)player->x] == 'S')

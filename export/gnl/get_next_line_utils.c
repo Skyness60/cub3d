@@ -12,7 +12,6 @@
 
 #include "get_next_line.h"
 
-
 char	*gnl_strjoin(char const *s1, char const *s2)
 {
 	int		sizetotal;

@@ -6,13 +6,13 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 08:49:14 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/20 16:21:11 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/24 12:27:54 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	flood_fill(t_data *data, int x, int y, int height)
+void	ff(t_data *data, int x, int y, int height)
 {
 	if (x < 0 || y < 0 || x >= (int)ft_strlen(data->cub->map->map_copy[y]) \
 	|| y >= height || data->cub->map->map_copy[y][x] == '1' \
@@ -33,19 +33,15 @@ void	flood_fill(t_data *data, int x, int y, int height)
 	&& data->cub->map->map_copy[y + 1][x] != '0')
 		close_all(data, "Map not closed: hole below");
 	data->cub->map->map_copy[y][x] = 'X';
-	flood_fill(data, x + 1, y, height);
-	flood_fill(data, x - 1, y, height);
-	flood_fill(data, x, y - 1, height);
-	flood_fill(data, x, y + 1, height);
-	flood_fill(data, x + 1, y + 1, height);
-	flood_fill(data, x - 1, y - 1, height);
-	flood_fill(data, x + 1, y - 1, height);
-	flood_fill(data, x - 1, y + 1, height);
+	return (ff(data, x + 1, y, height), ff(data, x - 1, y, height), \
+	ff(data, x, y - 1, height), ff(data, x, y + 1, height), \
+	ff(data, x + 1, y + 1, height), ff(data, x - 1, y - 1, height), \
+	ff(data, x + 1, y - 1, height), ff(data, x - 1, y + 1, height));
 }
 
 void	ft_to_fill(t_data *data, int move_x, int move_y, int height)
 {
-	flood_fill(data, move_x, move_y, height);
+	ff(data, move_x, move_y, height);
 }
 
 void	ft_player_position(char **m, t_data *data, char p)
@@ -96,4 +92,3 @@ int	verify_win(t_data *data)
 	data->cub->map->height);
 	return (0);
 }
-

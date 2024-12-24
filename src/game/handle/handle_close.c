@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:53:59 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/16 11:06:48 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/24 12:18:30 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	handle_close_icon(t_data *data)
 	exit(0);
 	return (0);
 }
-
 
 void	handle_close(t_data *data)
 {

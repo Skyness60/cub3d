@@ -22,8 +22,6 @@
 # endif
 
 char	*get_next_line(int fd);
-
-
 char	*gnl_strjoin(char const *s1, char const *s2);
 char	*gnl_strchr(const char *string, int searchedChar);
 void	gnl_bzero(void *s, unsigned int n);

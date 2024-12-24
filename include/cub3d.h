@@ -1,21 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/24 12:51:03 by sperron           #+#    #+#             */
+/*   Updated: 2024/12/24 13:27:59 by sperron          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 # include "../export/ultimatelib.h"
 # include "../mlx/mlx.h"
 # include <math.h>
 # include <X11/keysym.h>
-#include <X11/X.h>
+# include <X11/X.h>
 
 # define PI 3.14159265358979323846
-# define FOV PI / 3
 # define WIN_HEIGHT 1080
 # define WIN_WIDTH 1920
-# define MINIMAP_SCALE 0.2
-# define MINIMAP_PLAYER_COLOR 0xFF0000
-# define MINIMAP_BORDER_COLOR 0xFFFFFF
-# define MINIMAP_BACKGROUND_COLOR 0xc4c4c4
-# define PROJ_PLANE WIN_WIDTH / (2 * 0.57735026919)
-
+# define PROJ_PLANE 1.154700538
 
 typedef enum e_orientation
 {
@@ -25,7 +31,7 @@ typedef enum e_orientation
 	WEST,
 }			t_orientation;
 
-typedef struct	s_texture
+typedef struct s_texture
 {
 	char	*path;
 	void	*img;
@@ -38,7 +44,7 @@ typedef struct	s_texture
 	int		endian;
 }				t_texture;
 
-typedef struct	s_keys
+typedef struct s_keys
 {
 	bool	w;
 	bool	s;
@@ -48,14 +54,13 @@ typedef struct	s_keys
 	bool	right;
 }				t_keys;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	char	**map;
 	char	**map_copy;
 	int		width;
 	int		height;
 }				t_map;
-
 
 typedef struct s_cub
 {
@@ -73,7 +78,7 @@ typedef struct s_cub
 
 typedef struct s_player
 {
-	double 		angle;
+	double		angle;
 	int			nb;
 	char		orientation;
 	double		x;
@@ -81,15 +86,15 @@ typedef struct s_player
 	double		speed;
 }				t_player;
 
-typedef struct	s_mlx
+typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
 }				t_mlx;
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
-typedef struct	raycast
+typedef struct raycast
 {
 	double		angle;
 	int			count_r;
@@ -113,7 +118,7 @@ typedef struct	raycast
 	bool		debugg;
 }	t_raycast;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	t_cub					*cub;
 	t_player				*player;
@@ -150,7 +155,6 @@ int		check_map(t_data *data);
 bool	check_empty_line(t_data *data);
 int		verify_win(t_data *data);
 
-
 // raycasting & render
 void	raycasting(t_data *data, t_player *player);
 void	construct_img(t_data *data, t_raycast *raycast);
@@ -163,20 +167,7 @@ void	handle_close(t_data *data);
 int		handle_move_keypress(t_data *data);
 int		handle_keypress(int keycode, t_data *data);
 int		handle_keyrelease(int keycode, t_data *data);
-int	handle_close_icon(t_data *data);
+int		handle_close_icon(t_data *data);
 void	handle_move(t_data *data);
-
-// TEMPORAIRE 
-void	debug_map(t_data *data);
-void	handle_debug_move(t_data *data);
-void	print_map_with_player(t_data *data);
-
-// bonus
-void *minimap(t_data *data, void *img);
-int	*get_buffer(void *img);
-void	draw_square(void *img, int x, int y, int color);
-void	draw_camera_tip(int *buffer, int x, int y, double angle);
-void	draw_camera(void *img, int x, int y, double angle);
-int	handle_mouse_move(t_data *data);
 
 #endif // !CUB3D_H

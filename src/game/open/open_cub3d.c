@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_cub3d.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:15:17 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/16 10:44:29 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/24 12:24:01 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void	get_img_info(t_texture *img, t_data *data)
 {
 	img->img = mlx_xpm_file_to_image(data->mlx->mlx, img->path, &img->width, \
 	&img->height);
-	img->buffer = (int*)mlx_get_data_addr(img->img, &img->bpp, &img->sizeline,\
-	&img->endian);
+	img->buffer = (int *)mlx_get_data_addr(img->img, &img->bpp, \
+	&img->sizeline, &img->endian);
 }
 
 void	open_cub3d(t_data *data)

@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:46:19 by jlebard           #+#    #+#             */
-/*   Updated: 2024/12/18 15:40:31 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/24 12:52:55 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-
-static void	get_exact_hit(t_raycast *raycast)
-{
-	if (raycast->x)
-		raycast->precise_hit = raycast->player->y + \
-		raycast->len_x * raycast->ray_dir_y;
-	else
-		raycast->precise_hit = raycast->player->x + \
-		raycast->len_y * raycast->ray_dir_x;
-}
 
 static void	get_first_dt(t_raycast *raycast)
 {
@@ -42,7 +32,6 @@ static void	get_first_dt(t_raycast *raycast)
 	else
 		raycast->len_y = float_pos_y * raycast->delta_y;
 }
-
 
 static bool	get_distances(t_raycast *raycast)
 {
@@ -78,7 +67,6 @@ static void	get_directions(t_raycast *raycast)
 		raycast->step_x = -1;
 	else
 		raycast->step_x = 1;
-
 	if (sin(raycast->angle) < 0)
 		raycast->step_y = -1;
 	else
@@ -87,41 +75,46 @@ static void	get_directions(t_raycast *raycast)
 	raycast->ray_dir_y = sin(raycast->angle);
 }
 
+static void	get_exact_hit(t_raycast raycast, t_data *data)
+{
+	raycast.delta_x = fabs(1 / (cos(raycast.angle)));
+	raycast.delta_y = fabs(1 / (sin(raycast.angle)));
+	get_directions(&raycast);
+	raycast.x = get_distances(&raycast);
+	if (raycast.x)
+		raycast.precise_hit = raycast.player->y + \
+		raycast.len_x * raycast.ray_dir_y;
+	else
+		raycast.precise_hit = raycast.player->x + \
+		raycast.len_y * raycast.ray_dir_x;
+	construct_img(data, &raycast);
+}
+
 void	raycasting(t_data *data, t_player *player)
 {
 	t_raycast	raycast;
-	int	bpp;
-	int	sizeline;
-	int	endian;
-	
+	int			bpp;
+	int			sizeline;
+	int			endian;
+
 	data->raycast = &raycast;
-	raycast.debugg = 1;
-	raycast.angle = player->angle - FOV / 2;
-	raycast.count_r = 0;
+	raycast.angle = player->angle - (PI / 3) / 2;
+	raycast.count_r = -1;
 	raycast.data = data;
 	raycast.player = player;
 	raycast.new_img = mlx_new_image(data->mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
-	raycast.new_buff = (int *)(mlx_get_data_addr(raycast.new_img, &bpp, &sizeline, &endian));
-	while (raycast.count_r < WIN_WIDTH)
+	raycast.new_buff = (int *)(mlx_get_data_addr(raycast.new_img, &bpp, \
+	&sizeline, &endian));
+	while (++raycast.count_r < WIN_WIDTH)
 	{
-		raycast.angle += FOV / WIN_WIDTH;
+		raycast.angle += (PI / 3) / WIN_WIDTH;
 		if (raycast.angle < 0)
 			raycast.angle += 2 * PI;
-		if (raycast.angle >= 2 * PI)
+		else if (raycast.angle >= 2 * PI)
 			raycast.angle -= 2 * PI;
-		raycast.delta_x = fabs(1 / (cos(raycast.angle)));
-		raycast.delta_y = fabs(1 / (sin(raycast.angle)));
-		if (raycast.delta_x < 1e-6)
-			raycast.delta_x = 1e-6;
-		if (raycast.delta_y < 1e-6)
-			raycast.delta_y = 1e-6;
-		get_directions(&raycast);
-		raycast.x = get_distances(&raycast);
-		get_exact_hit(&raycast);
-		construct_img(data, &raycast);
-		raycast.count_r++;
+		get_exact_hit(raycast, data);
 	}
-		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
-		raycast.new_img, 0, 0);
-		mlx_destroy_image(data->mlx->mlx, raycast.new_img);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
+	raycast.new_img, 0, 0);
+	mlx_destroy_image(data->mlx->mlx, raycast.new_img);
 }

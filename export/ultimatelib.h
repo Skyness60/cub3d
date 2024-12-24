@@ -1,5 +1,17 @@
-#ifndef ULTIMATE_G
-# define ULTIMATE_G
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ultimatelib.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/24 12:56:52 by sperron           #+#    #+#             */
+/*   Updated: 2024/12/24 12:57:48 by sperron          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef ULTIMATELIB_H
+# define ULTIMATELIB_H
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
