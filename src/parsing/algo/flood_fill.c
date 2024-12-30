@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 08:49:14 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/24 12:27:54 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/30 11:41:24 by jlebard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	ft_player_position(char **m, t_data *data, char p)
 		{
 			if (m[i][j] == p)
 			{
-				data->player->x = j;
-				data->player->y = i;
+				data->player->x = (double)j + 0.01;
+				data->player->y = (double)i + 0.01;
 				return ;
 			}
 			j++;
