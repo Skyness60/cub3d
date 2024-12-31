@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:53:19 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/18 15:57:40 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/31 14:42:27 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,6 @@ void	expand_map_capacity(t_data *data, int *map_capacity)
 	add_ptr(data->trash_ptr, new_map);
 }
 
-bool	is_map_start(char *line)
-{
-	int	j;
-
-	j = -1;
-	while (line[++j] != '\0')
-	{
-		if (!ft_isspace(line[j]) && line[j] == '1')
-			return (true);
-	}
-	return (false);
-}
-
 bool	is_line_valid(char *line)
 {
 	int	j;
@@ -57,6 +44,19 @@ bool	is_line_valid(char *line)
 			return (false);
 	}
 	return (true);
+}
+
+bool	is_map_start(char *line)
+{
+	int	j;
+
+	j = -1;
+	while (line[++j] != '\0')
+	{
+		if (!ft_isspace(line[j]) && is_line_valid(line) && line[j] == '1')
+			return (true);
+	}
+	return (false);
 }
 
 void	add_map_line(t_data *data, char *line, int *map_capacity)

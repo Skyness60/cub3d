@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:25:35 by sperron           #+#    #+#             */
-/*   Updated: 2024/11/21 08:13:46 by sperron          ###   ########.fr       */
+/*   Updated: 2024/12/31 15:38:11 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	get_texture(t_data *data, char *line)
 		return (close_all(data, "Malloc error"));
 	add_ptr_tab(data->trash_ptr, (void **)tab, ft_tablen(tab), true);
 	i = -1;
-	while (tab[++i])
+	while (tab[++i] && ft_tablen(tab) > 1)
 	{
 		check_orientation(data, tab, i);
 	}
@@ -72,25 +72,23 @@ static void	get_texture(t_data *data, char *line)
 
 void	read_texture(char **file, t_data *data)
 {
-	int		i;
-	int		j;
-
-	i = -1;
-	while (file[++i])
-	{
-		get_texture(data, file[i]);
-		j = -1;
-		while (file[i][++j])
-		{
-			if (file[i][j] == 'F')
-				check_color(data, file, i, true);
-			else if (file[i][j] == 'C')
-				check_color(data, file, i, false);
-		}
-	}
+	if (file[0][0] == 'N' && file[0][1] == 'O')
+		get_texture(data, file[0]);
+	if (file[1][0] == 'S' && file[1][1] == 'O')
+		get_texture(data, file[1]);
+	if (file[2][0] == 'W' && file[2][1] == 'E')
+		get_texture(data, file[2]);
+	if (file[3][0] == 'E' && file[3][1] == 'A')
+		get_texture(data, file[3]);
+	if (file[4][0] == 'F')
+		check_color(data, file, 4, true);
+	if (file[5][0] == 'C')
+		check_color(data, file, 5, false);
 	if (!data->cub->texture[NORTH].path || !data->cub->texture[SOUTH].path || \
 		!data->cub->texture[WEST].path || !data->cub->texture[EAST].path)
-		return (close_all(data, "Missing texture"));
+		return (close_all(data, "Texture incorrect"));
 	if (data->cub->char_ceiling[0] == '\0' || data->cub->char_floor[0] == '\0')
-		return (close_all(data, "Missing color"));
+		return (close_all(data, "Color incorrect"));
+	if (ft_strncmp(file[6], data->cub->map->map[0], ft_strlen(data->cub->map->map[0])))
+		return (close_all(data, "Cub file incorrect"));
 }

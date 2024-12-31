@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_texture_color.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:00:51 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/10 11:43:07 by jlebard          ###   ########.fr       */
+/*   Updated: 2024/12/31 15:40:15 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,17 @@ static char	*cs(t_data *data, char **rgb)
 	return (color_str);
 }
 
+bool	format_rgb(char *rgb)
+{
+	int	i;
+
+	i = -1;
+	while (rgb[++i])
+		if (ft_atoi(rgb) < 0 || ft_atoi(rgb) > 255)
+			return (false);
+	return (true);
+}
+
 void	check_color(t_data *data, char **tab, int i, bool check)
 {
 	char	**rgb;
@@ -101,7 +112,8 @@ void	check_color(t_data *data, char **tab, int i, bool check)
 	{
 		j = -1;
 		while (rgb[k][++j])
-			if (!ft_isdigit(rgb[k][j]) || ft_tablen(rgb) != 3)
+			if (!ft_isdigit(rgb[k][j]) || ft_tablen(rgb) != 3 || \
+			format_rgb(rgb[k]) == false)
 				return (close_all(data, "Wrong color format"));
 	}
 	if (check == true)
