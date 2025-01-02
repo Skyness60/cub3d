@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:00:51 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/31 15:40:15 by sperron          ###   ########.fr       */
+/*   Updated: 2025/01/02 16:42:26 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,39 +83,51 @@ static char	*cs(t_data *data, char **rgb)
 	return (color_str);
 }
 
-bool	format_rgb(char *rgb)
+static	int	count_char(char *str, char c)
 {
 	int	i;
+	int	count;
 
 	i = -1;
+	count = 0;
+	while (str[++i])
+		if (str[i] == c)
+			count++;
+	return (count);
+}
+
+bool	format_rgb(char **rgb, t_data *data)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	count = 0;
+	while (++i < 3)
+		if (rgb[i] && rgb[i][ft_strlen(rgb[i]) - 1] == ',')
+			count++;
+	if (count != 2 && ((ft_tablen(rgb) != 1 && count_char(rgb[0], ',') != 3) \
+	|| (ft_tablen(rgb) != 2 && count_char(rgb[0], ',') + count_char(rgb[1], ',') != 3)))
+		return (close_all(data, "Color format error"), false);
+	i = -1;
 	while (rgb[++i])
-		if (ft_atoi(rgb) < 0 || ft_atoi(rgb) > 255)
-			return (false);
+		if (ft_atoi(rgb[i]) < 0 || ft_atoi(rgb[i]) > 255)
+			return (close_all(data, "Color value error"), false);
 	return (true);
 }
 
 void	check_color(t_data *data, char **tab, int i, bool check)
 {
 	char	**rgb;
-	int		k;
-	int		j;
 
 	if ((check && data->cub->char_floor[0] != '\0') \
 	|| (!check && data->cub->char_ceiling[0] != '\0'))
 		return (close_all(data, "Duplicate color"));
-	k = -1;
-	rgb = ft_split(tab[i], ",FC \t\n\v\f");
+	rgb = ft_split(tab[i], "FC \t\n\v\f");
 	if (!rgb)
 		return (close_all(data, "Malloc error"));
 	add_ptr_tab(data->trash_ptr, (void **)rgb, ft_tablen(rgb), true);
-	while (rgb[++k])
-	{
-		j = -1;
-		while (rgb[k][++j])
-			if (!ft_isdigit(rgb[k][j]) || ft_tablen(rgb) != 3 || \
-			format_rgb(rgb[k]) == false)
-				return (close_all(data, "Wrong color format"));
-	}
+	format_rgb(rgb, data);
 	if (check == true)
 		return (data->cub->char_floor = cs(data, rgb), \
 		add_ptr(data->trash_ptr, data->cub->char_floor));

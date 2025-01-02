@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 08:49:14 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/31 16:34:16 by sperron          ###   ########.fr       */
+/*   Updated: 2025/01/02 17:07:32 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,27 @@ void	ft_player_position(char **m, t_data *data, char p)
 	}
 }
 
+void	diagona_check(t_data *data)
+{
+	int	i;
+	int	len;
+
+	i = -1;
+	while (++i < data->cub->map->height)
+	{
+		len = ft_strlen(data->cub->map->map[i]);
+		data->cub->map->map_copy[i] = malloc(len + 2);
+		if (!data->cub->map->map_copy[i])
+			close_all(data, "Malloc error");
+		ft_strlcpy(data->cub->map->map_copy[i], data->cub->map->map[i], len + 3);
+		data->cub->map->map_copy[i][len] = '0';
+		data->cub->map->map_copy[i][len + 1] = '\0';
+	}
+	data->cub->map->width += 1;
+	add_ptr_tab(data->trash_ptr, (void *)data->cub->map->map_copy, \
+	data->cub->map->height, true);
+}
+
 int	verify_win(t_data *data)
 {
 	int	can_row;
@@ -83,9 +104,10 @@ int	verify_win(t_data *data)
 		if (!data->cub->map->map_copy[can_row])
 			return (close_all(data, "Malloc error"), 0);
 	}
-	data->cub->map->map_copy[can_row] = NULL;
+	data->cub->map->width += 2;
 	add_ptr_tab(data->trash_ptr, \
 	(void *)data->cub->map->map_copy, data->cub->map->height, true);
+	diagona_check(data);
 	ft_player_position(data->cub->map->map_copy, data, \
 	data->player->orientation);
 	ft_to_fill(data, data->player->x, data->player->y, \
