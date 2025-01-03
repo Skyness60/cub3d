@@ -21,6 +21,7 @@ SRC = 		src/cub3d.c \
 			src/parsing/cub/cub_map.c \
 			src/parsing/cub/cub_texture.c \
 			src/parsing/cub/cub_texture_color.c \
+			src/parsing/cub/cub_texture_color_utils.c \
 			src/parsing/check/check_name.c \
 			src/parsing/utils/close_all.c \
 			src/parsing/check/check_map.c \

@@ -80,15 +80,19 @@ void	read_texture(char **file, t_data *data)
 		get_texture(data, file[2]);
 	if (file[3][0] == 'E' && file[3][1] == 'A')
 		get_texture(data, file[3]);
-	if (file[4][0] == 'F')
+	if (file[4][0] == 'F' && file[4][1] == ' ')
 		check_color(data, file, 4, true);
-	if (file[5][0] == 'C')
+	if (file[5][0] == 'C' && file[5][1] == ' ')
 		check_color(data, file, 5, false);
-	if (!data->cub->texture[NORTH].path || !data->cub->texture[SOUTH].path || \
-		!data->cub->texture[WEST].path || !data->cub->texture[EAST].path)
+	if (!data->cub->texture[NORTH].path \
+	|| !data->cub->texture[SOUTH].path \
+	|| !data->cub->texture[WEST].path \
+	|| !data->cub->texture[EAST].path)
 		return (close_all(data, "Texture incorrect"));
-	if (data->cub->char_ceiling[0] == '\0' || data->cub->char_floor[0] == '\0')
+	if (data->cub->char_ceiling[0] == '\0' \
+	|| data->cub->char_floor[0] == '\0')
 		return (close_all(data, "Color incorrect"));
-	if (ft_strncmp(file[6], data->cub->map->map[0], ft_strlen(data->cub->map->map[0])))
+	if (ft_strncmp(file[6], data->cub->map->map[0], \
+	ft_strlen(data->cub->map->map[0])))
 		return (close_all(data, "Cub file incorrect"));
 }

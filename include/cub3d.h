@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlebard <jlebard@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 12:51:03 by sperron           #+#    #+#             */
-/*   Updated: 2024/12/30 11:29:01 by jlebard          ###   ########.fr       */
+/*   Updated: 2025/01/03 10:43:09 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int		check_valid_map(t_data *data);
 int		check_map(t_data *data);
 bool	check_empty_line(t_data *data);
 int		verify_win(t_data *data);
+bool	format_rgb(char **rgb, t_data *data);
 
 // raycasting & render
 void	raycasting(t_data *data, t_player *player);

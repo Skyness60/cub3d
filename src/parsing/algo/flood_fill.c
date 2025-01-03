@@ -79,7 +79,8 @@ void	diagona_check(t_data *data)
 		data->cub->map->map_copy[i] = malloc(len + 2);
 		if (!data->cub->map->map_copy[i])
 			close_all(data, "Malloc error");
-		ft_strlcpy(data->cub->map->map_copy[i], data->cub->map->map[i], len + 3);
+		ft_strlcpy(data->cub->map->map_copy[i], \
+		data->cub->map->map[i], len + 3);
 		data->cub->map->map_copy[i][len] = '0';
 		data->cub->map->map_copy[i][len + 1] = '\0';
 	}

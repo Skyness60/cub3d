@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:00:51 by sperron           #+#    #+#             */
-/*   Updated: 2025/01/02 16:42:26 by sperron          ###   ########.fr       */
+/*   Updated: 2025/01/03 10:44:06 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,46 +83,22 @@ static char	*cs(t_data *data, char **rgb)
 	return (color_str);
 }
 
-static	int	count_char(char *str, char c)
-{
-	int	i;
-	int	count;
-
-	i = -1;
-	count = 0;
-	while (str[++i])
-		if (str[i] == c)
-			count++;
-	return (count);
-}
-
-bool	format_rgb(char **rgb, t_data *data)
-{
-	int	i;
-	int	count;
-
-	i = -1;
-	count = 0;
-	while (++i < 3)
-		if (rgb[i] && rgb[i][ft_strlen(rgb[i]) - 1] == ',')
-			count++;
-	if (count != 2 && ((ft_tablen(rgb) != 1 && count_char(rgb[0], ',') != 3) \
-	|| (ft_tablen(rgb) != 2 && count_char(rgb[0], ',') + count_char(rgb[1], ',') != 3)))
-		return (close_all(data, "Color format error"), false);
-	i = -1;
-	while (rgb[++i])
-		if (ft_atoi(rgb[i]) < 0 || ft_atoi(rgb[i]) > 255)
-			return (close_all(data, "Color value error"), false);
-	return (true);
-}
-
 void	check_color(t_data *data, char **tab, int i, bool check)
 {
 	char	**rgb;
+	int		j;
 
+	j = -1;
 	if ((check && data->cub->char_floor[0] != '\0') \
 	|| (!check && data->cub->char_ceiling[0] != '\0'))
 		return (close_all(data, "Duplicate color"));
+	if (ft_isspace(tab[i][1]) != 1)
+		return (close_all(data, "Wrong error format"));
+	while (tab[i][++j])
+	{
+		if (tab[i][j] == ',' && ft_isspace(tab[i][j + 1]) != 1)
+			return (close_all(data, "Wrong color format"));
+	}
 	rgb = ft_split(tab[i], "FC \t\n\v\f");
 	if (!rgb)
 		return (close_all(data, "Malloc error"));
