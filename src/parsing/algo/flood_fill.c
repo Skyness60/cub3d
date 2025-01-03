@@ -6,7 +6,7 @@
 /*   By: sperron <sperron@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 08:49:14 by sperron           #+#    #+#             */
-/*   Updated: 2025/01/02 17:07:32 by sperron          ###   ########.fr       */
+/*   Updated: 2025/01/03 11:52:19 by sperron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ void	ft_player_position(char **m, t_data *data, char p)
 			{
 				data->player->x = (double)j + 0.01;
 				data->player->y = (double)i + 0.01;
+				if (i == 0 || i == data->cub->map->height - 1 \
+				|| j == 0 || j == (int)ft_strlen(m[i]) - 1)
+					return (close_all(data, "Wrong player position border"));
+				if ((int)data->player->x > (int)ft_strlen(m[i - 1]) \
+				|| (int)data->player->x > (int)ft_strlen(m[i + 1]))
+					return (close_all(data, "Wrong player position"));
 				return ;
 			}
 			j++;

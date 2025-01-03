@@ -1,0 +1,21 @@
+NO                    ./assets/textures/brick_hi.xpm
+SO ./assets/textures/stone_hi.xpm                  
+
+
+
+
+
+WE ./assets/textures/metal_hi.xpm
+EA ./assets/textures/wood_hi.xpm
+
+F           255, 0, 0
+
+C 5, 0, 0
+
+1111111
+1101001
+1010001
+1000001
+1000001
+1000001
+111N111
