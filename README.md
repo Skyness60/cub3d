@@ -1,4 +1,6 @@
 # 🕹️ cub3d
+## PREVIEW
+[Screencast from 02-25-2025 03:50:09 PM.webm](https://github.com/user-attachments/assets/8e8ea818-f43a-4152-b0d0-24cfa9f86623)
 
 Bienvenue sur **cub3d** 🎮 !  
 Ce projet consiste à créer un mini-jeu en 3D, inspiré des premiers jeux de type FPS, à l'aide de la librairie **mlx** de **42**. Le but est de générer une vue en 3D basée sur un fichier de configuration de type `.cub`, en affichant une carte et en permettant à l'utilisateur de se déplacer dedans.
